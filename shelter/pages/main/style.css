@@ -1,0 +1,12 @@
+@charset "UTF-8";
+@font-face {
+  font-family: 'Arial';
+  src: url("/shelter/assets/fonts/fonts/fonts/arial/arial-regular.ttf");
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: 'Georgia';
+  src: url("/shelter/assets/fonts/fonts/fonts/georgia/georgia-regular.ttf");
+  font-weight: 400;
+}
