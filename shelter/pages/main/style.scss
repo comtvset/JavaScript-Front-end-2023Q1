@@ -1,0 +1,350 @@
+@font-face {
+    font-family: 'Arial';
+    src: url("/shelter/assets/fonts/fonts/fonts/arial/arial-regular.ttf");
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: 'Georgia';
+    src: url("/shelter/assets/fonts/fonts/fonts/georgia/georgia-regular.ttf");
+    font-weight: 400;
+}
+
+body {
+    overflow: auto;
+    position: relative;
+    margin: 0 auto;
+}
+
+body.lock {
+    overflow: hidden;
+}
+
+.content {
+    width: 100%; //1280px;
+    display: flex;
+    justify-content: center;
+}
+
+.wrapper {
+    width: 75rem; //1200px;
+    margin-left: 40px;
+}
+
+html {
+    scroll-behavior: smooth;
+    background: url(../../../shelter/assets/images/noise_transparent@2x.png),
+        radial-gradient(100% 215.42% at 0% 0%, #5B483A 0%, #262425 100%), #211F20;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+a:visited {
+    color: #545454;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+%transition {
+    transition: all 0.5s ease;
+}
+
+@mixin flexColumn() {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+}
+
+@mixin flexRow() {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+
+@mixin fontFamilyGeorgia() {
+    font-family: 'Georgia';
+    font-style: normal;
+    font-weight: 400;
+}
+
+@mixin fontFamilyArial() {
+    font-family: 'Arial', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+}
+
+@mixin btnStyle() {
+    font-size: 17px;
+    line-height: 130%;
+    letter-spacing: 0.06em;
+    color: #292929;
+    border-radius: 100px;
+}
+
+@mixin btnArrow() {
+    height: 52px;
+    width: 52px;
+    border-radius: 50%;
+    border: 2px solid #F1CDB3;
+    background-color: transparent;
+}
+
+/* ### HEADER ### */
+header .wrapper .header {
+    @include flexRow();
+    justify-content: space-between;
+    align-items: center;
+    height: 60px;
+    margin-top: 31px;
+}
+
+header .wrapper .header .logo {
+    width: 186px;
+    height: 60px;
+    cursor: pointer;
+    position: relative;
+    z-index: 1;
+}
+
+header .wrapper .header .logo h1 {
+    @include fontFamilyGeorgia();
+    font-size: 32px;
+    line-height: 110%;
+    letter-spacing: 0.06em;
+    color: #F1CDB3;
+    margin-top: 0px;
+}
+
+header .wrapper .header .logo .logo-text {
+    @include fontFamilyArial();
+    font-size: 13px;
+    line-height: 17px;
+    letter-spacing: 0.1em;
+    color: #FFFFFF;
+    margin-top: -14px;
+    margin-left: 5px;
+}
+
+.nav {
+    @include flexRow();
+    align-items: center;
+    list-style: none;
+    margin-top: 8px;
+}
+
+#fbmenu {
+    position: relative;
+}
+
+.nav-item {
+    margin-right: 35px;
+}
+
+.nav-item:last-child {
+    margin-right: 0px;
+  }
+
+.nav-item a {
+    display: inline-block;
+    color: #CDCDCD;
+}
+
+.nav-item a.active:after {
+    display: block;
+    content: "";
+    height: 3px;
+    background-color: #F1CDB3;
+    @extend %transition;
+}
+
+.nav-item a:hover:after,
+.nav-item a:focus:after {
+    width: 100%;
+}
+
+.nav-link {
+    @include fontFamilyArial();
+    font-size: 15px;
+    line-height: 160%;
+    color: #CDCDCD;
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+    margin: 10px 0px;
+    @extend %transition;
+
+    &:hover,
+    &:focus,
+    &:active {
+        color: #FAFAFA;
+        @extend %transition;
+    }
+}
+
+@media (max-width: 1279px) {
+    header .wrapper .header {
+        margin-left: -10px;
+    }
+    .nav {
+        margin-right: 32px;
+    }
+}
+
+
+/* ### NOT ONLY ### */
+main .wrapper .info {
+    @include flexRow();
+    justify-content: space-between;
+}
+
+main .wrapper .info .info-text {
+    width: 460px;
+    height: 322px;
+    display: flex;
+    // flex-wrap: nowrap;
+    flex-direction: column;
+    justify-content: flex-start;
+    // flex-grow: 3;
+    margin-top: 253px;
+}
+
+main .wrapper .info .info-text .info-text_title {
+    @include fontFamilyGeorgia();
+    font-size: 44px;
+    line-height: 130%;
+    color: #FFFFFF;
+    width: 310px;
+    height: 114px;
+    margin-top: 0;
+}
+
+main .wrapper .info .info-text .info-text_subtitle {
+    @include fontFamilyArial();
+    font-size: 15px;
+    line-height: 160%;
+    color: #CDCDCD;
+    width: 100%;
+    height: 72px;
+    margin-top: 6px;
+}
+
+.info-button {
+    @include fontFamilyGeorgia();
+    @include btnStyle();
+    width: 207px;
+    height: 52px;
+    background: #F1CDB3;
+    margin: 0;
+    border: 2px solid #FDDCC4;
+    margin-top: 25px;
+    cursor: pointer;
+    @extend %transition;
+
+    &:hover,
+    &:active {
+        @extend %transition;
+        background: #FDDCC4;
+    }
+}
+
+.info-img {
+    @include flexColumn();
+    margin-top: 89px;
+}
+
+@media (max-width: 1279px) {
+    main .wrapper .info {
+        @include flexColumn();
+        margin-left: 114px;
+    }
+    main .wrapper .info .info-text .info-text_title {
+        width: 80%;
+    }
+    main .wrapper .info .info-text {
+        margin-top: 60px;
+        width: 75%;
+        flex-direction: column;
+    }
+    .info-button {
+        margin-left: 126px;
+    }
+    .info-img {
+        width: 569px;
+        margin-top: 99px;
+        margin-left: 15px;
+    }
+}
+
+/* ### ABOUT ### */
+main .bg-white {
+    background: #FFFFFF;
+}
+
+main .bg-white .about {
+    @include flexRow();
+    justify-content: flex-start;
+}
+
+.about-img {
+    margin-top: 80px;
+    margin-left: 175px;
+    margin-bottom: 95px;
+}
+
+.about-text {
+    @include flexColumn();
+    justify-content: flex-start;
+    flex-grow: 3;
+    margin-top: 93px;
+    margin-left: 120px;
+}
+
+.about-title {
+    @include fontFamilyGeorgia();
+    font-size: 35px;
+    line-height: 130%;
+    letter-spacing: 0.06em;
+    color: #545454;
+    width: 67%;
+    height: 90px;
+    margin-top: 0;
+}
+
+.about-subtitle {
+    @include fontFamilyArial();
+    font-size: 15px;
+    line-height: 159%;
+    color: #4C4C4C;
+    width: 70%;
+    height: 96px;
+    margin-top: -10px;
+    margin-bottom: 36px;
+}
+
+@media (max-width: 1279px) {
+    main .bg-white .about {
+        @include flexColumn();
+        flex-direction: column-reverse;
+    }
+    .img-property {
+        margin-top: 11px;
+        margin-left: 19px;
+        margin-bottom: 95px;
+    }
+    .about-text {
+        width: 80%;
+        margin-top: 80px;
+        padding-left: 9px;
+    }
+    .about-title {
+        width: 55%;
+    }
+    .about-subtitle {
+        width: 75%;
+    }
+}
