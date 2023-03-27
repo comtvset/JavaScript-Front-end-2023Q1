@@ -304,7 +304,7 @@ main .bg-white .about {
     margin-left: 120px;
 }
 
-.about-title {
+.all-title {
     @include fontFamilyGeorgia();
     font-size: 35px;
     line-height: 130%;
@@ -334,7 +334,7 @@ main .bg-white .about {
     .img-property {
         margin-top: 11px;
         margin-left: 19px;
-        margin-bottom: 95px;
+        // margin-bottom: 95px;
     }
     .about-text {
         width: 80%;
@@ -346,5 +346,356 @@ main .bg-white .about {
     }
     .about-subtitle {
         width: 75%;
+    }
+}
+
+/* ### FRIENDS ### */
+
+.friends-text {
+    height: 90px;
+    margin-left: 42px;
+    margin-top: 80px;
+    text-align: center;
+}
+
+.friends-title {
+    width: 100%;
+}
+
+.left-btn {
+    position: reltive;
+    @include btnArrow();
+    transform: rotate(-180deg);
+    margin-top: 193px;
+    margin-left: 60px;
+    cursor: pointer;
+    @extend %transition;
+
+    &:hover,
+    &:active {
+        @extend %transition;
+        background: #FDDCC4;
+        border: 2px solid #FDDCC4;
+    }
+}
+
+.right-btn {
+    position: reltive;
+    @include btnArrow();
+    margin-left: 54px;
+    margin-right: 20px;
+    margin-top: 193px;
+    cursor: pointer;
+    @extend %transition;
+
+    &:hover,
+    &:active {
+        @extend %transition;
+        background: #FDDCC4;
+        border: 2px solid #FDDCC4;
+    }
+}
+
+.friends {
+    @include flexColumn();
+    align-items: center;
+    background: #F6F6F6;
+}
+
+.deck {
+    @include flexRow();
+    justify-content:center;
+    background: #F6F6F6;
+    width: 100%;
+    // height: 435px;
+    margin-top: 61px;
+    // margin-left: 40px;
+    max-width: 1280px;
+}
+
+.cards {
+    @include flexRow();
+    justify-content: space-between;
+    margin-left: 53px;
+    width: 80%;
+}
+
+.pet-card_h3 {
+    @include fontFamilyGeorgia();
+    font-size: 20px;
+    line-height: 23px;
+    text-align: center;
+    letter-spacing: 0.06em;
+    color: #545454;
+    margin-top: 25px;
+}
+
+.pet-card {
+    width: 270px;
+    height: 435px;
+    background: #FAFAFA;
+    border-radius: 9px;
+    @extend %transition;
+    cursor: pointer;
+
+    &:hover {
+        @extend %transition;
+        -webkit-box-shadow: 0px 3px 26px -11px rgba(66, 68, 90, 1);
+        -moz-box-shadow: 0px 3px 26px -11px rgba(66, 68, 90, 1);
+        box-shadow: 0px 3px 26px -11px rgba(66, 68, 90, 1);
+    }
+}
+
+.pet-card:hover .pet-card_btn {
+    background: #FDDCC4;
+    @extend %transition;
+}
+
+.pet-card_btn {
+    @include fontFamilyGeorgia();
+    @include btnStyle();
+    width: 187px;
+    height: 52px;
+    background: #F6F6F6;
+    border: 2px solid #FDDCC4;
+    margin-top: 10px;
+    margin-left: 41px;
+    transition: all 0.5s ease;
+    cursor: pointer;
+}
+
+.pet-btn {
+    @include fontFamilyGeorgia();
+    @include btnStyle();
+    width: 261px;
+    height: 52px;
+    background: #F1CDB3;
+    border: 2px solid #F1CDB3;
+    margin-top: 60px;
+    margin-left: 40px;
+    margin-bottom: 100px;
+    @extend %transition;
+    cursor: pointer;
+
+    &:hover,
+    &:active {
+        @extend %transition;
+        background: #FDDCC4;
+        border: 2px solid #FDDCC4;
+    }
+}
+
+@media (max-width: 1279px) {
+    .friends-title {
+        width: 100%;
+    }
+    .friends-text {
+        height: 90px;
+        margin-left: 2px;
+        margin-top: 80px;
+        text-align: center;
+    }
+
+    .cards {
+        justify-content: flex-start;
+        margin-left: 0px;
+        overflow: hidden;
+    }
+
+    .deck {
+        margin-top: 60px;
+    }
+
+    .pet-card {
+        margin-left: 23px;
+        margin-right: 17px;
+    }
+
+    .pet-card:nth-child(2n) {
+        margin-left: 39px;
+    }
+
+    .pet-btn {
+        margin-left: auto;
+    }
+
+    .left-btn {
+        margin-left: 20px;
+        margin-right: -11px;
+    }
+    .right-btn {
+        margin-left: 0px;
+        margin-right: 20px;
+    }
+}
+
+/* ### HELP ### */
+
+.help {
+    @include flexColumn();
+    // justify-content: flex-start;
+    align-items: center;
+}
+
+.help-text {
+    padding-top: 80px;
+    margin-left: 171px;
+    text-align: center;
+
+}
+
+.help-list {
+    margin-top: 25px;
+    // width: 1160px;
+    width: 100%;
+    height: 281px;
+    margin-bottom: 100px;
+    margin-left: 95px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-content: flex-start;
+}
+
+.item-text_h4 {
+    @include fontFamilyGeorgia();
+    font-size: 20px;
+    line-height: 115%;
+    letter-spacing: 0.06em;
+    color: #545454;
+}
+
+.item {
+    text-align: center;
+    width: 168px;
+    height: 113px;
+}
+
+.item1 {
+    width: 85px;
+    margin-left: 38px;
+    margin-right: 80px;
+}
+
+.item2 {
+    width: 150px;
+    margin-left: 38px;
+    margin-right: 80px;
+}
+
+.item3 {
+    width: 65px;
+    margin-left: 38px;
+    margin-right: 80px;
+}
+
+.item4 {
+    width: 155px;
+    margin-left: 37px;
+    margin-right: 82px;
+}
+
+.item5 {
+    width: 101px;
+    margin-left: 37px;
+}
+
+.item6 {
+    width: 89px;
+    margin-left: 123px;
+    margin-right: 120px;
+    margin-top: 55px;
+}
+
+.item7 {
+    width: 101px;
+    margin-left: 1px;
+    margin-right: 118px;
+    margin-top: 55px;
+}
+
+.item8 {
+    width: 168px;
+    margin-left: 1px;
+    margin-right: 117px;
+    margin-top: 55px;
+}
+
+.item9 {
+    width: 145px;
+    margin-top: 55px;
+}
+
+@media (max-width: 1279px) {
+    /* ### HELP ### */
+
+    .help-text {
+        margin-left: 130px;
+    }
+
+    .help-list {
+        width: 708px;
+        height: 539px;
+        margin-left: 20px;
+        margin-bottom: 10px;
+    }
+
+    .item1 {
+        width: 85px;
+        margin-left: 51px;
+        margin-right: 80px;
+    }
+
+    .item2 {
+        width: 150px;
+        margin-left: 32px;
+        margin-right: 80px;
+    }
+
+    .item3 {
+        width: 65px;
+        margin-left: 43px;
+        margin-right: 80px;
+    }
+
+    .item4 {
+        width: 155px;
+        margin-left: 16px;
+        margin-right: 72px;
+        margin-top: 55px;
+    }
+
+    .item5 {
+        width: 101px;
+        margin-left: 30px;
+        margin-right: 12px;
+        margin-top: 55px;
+    }
+
+    .item6 {
+        width: 89px;
+        margin-left: 123px;
+        margin-right: 20px;
+        margin-top: 55px;
+    }
+
+    .item7 {
+        width: 101px;
+        margin-left: 43px;
+        margin-right: 60px;
+        margin-top: 55px;
+    }
+
+    .item8 {
+        width: 168px;
+        margin-left: 36px;
+        margin-right: 73px;
+        margin-top: 55px;
+    }
+
+    .item9 {
+        width: 145px;
+        margin-top: 55px;
     }
 }
