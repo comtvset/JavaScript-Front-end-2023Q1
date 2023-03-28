@@ -815,6 +815,7 @@ main .bg-white .about {
     justify-content: flex-start;
     width: 300px;
     margin-top: 23px;
+    // margin-left: -20px;
 }
 
 .box_possition-center {
@@ -841,6 +842,12 @@ main .bg-white .about {
     letter-spacing: 0.06em;
     color: #F1CDB3;
     margin-left: 20px;
+    &:hover,
+    &:focus,
+    &:active {
+        color: #cc883bda;
+        @extend %transition;
+    }
 }
 
 .footer-blok-info {
