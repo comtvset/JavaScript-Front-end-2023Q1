@@ -47,7 +47,7 @@ a:visited {
   box-sizing: border-box;
 }
 
-.donation-number:hover, .donation-number, .pet-btn:hover, .pet-btn:active, .pet-btn, .pet-card:hover .pet-card_btn, .pet-card:hover, .pet-card, .right-btn:hover, .right-btn:active, .right-btn, .left-btn:hover, .left-btn:active, .left-btn, .info-button:hover, .info-button:active, .info-button, .nav-link:hover, .nav-link:focus, .nav-link:active, .nav-link, .nav-item a.active:after {
+.h4_footer:hover, .h4_footer:focus, .h4_footer:active, .donation-number:hover, .donation-number, .pet-btn:hover, .pet-btn:active, .pet-btn, .pet-card:hover .pet-card_btn, .pet-card:hover, .pet-card, .right-btn:hover, .right-btn:active, .right-btn, .left-btn:hover, .left-btn:active, .left-btn, .info-button:hover, .info-button:active, .info-button, .nav-link:hover, .nav-link:focus, .nav-link:active, .nav-link, .nav-item a.active:after {
   transition: all 0.5s ease;
 }
 
@@ -816,6 +816,9 @@ main .bg-white .about {
   letter-spacing: 0.06em;
   color: #F1CDB3;
   margin-left: 20px;
+}
+.h4_footer:hover, .h4_footer:focus, .h4_footer:active {
+  color: rgba(204, 136, 59, 0.8549019608);
 }
 
 .footer-blok-info {
