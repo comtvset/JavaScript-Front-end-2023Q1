@@ -810,13 +810,13 @@ main .bg-white .about {
 
 /* ### FOOTER ### */
 
-.footer_container {
+.contact {
     @include flexRow();
     justify-content: flex-start;
     margin-top: 40px;
 }
 
-.footer-info {
+.box {
     @include flexColumn();
     justify-content: flex-start;
     width: 300px;
@@ -824,16 +824,16 @@ main .bg-white .about {
     // margin-left: -20px;
 }
 
-.box_possition-center {
+.addres {
     margin-left: 139px;
 }
 
-.box_possition-right {
+.picture {
     margin-left: 161px;
     margin-top: 40px;
 }
 
-.h3_footer {
+.footer-title {
     @include fontFamilyGeorgia();
     font-size: 35px;
     line-height: 130%;
@@ -841,7 +841,7 @@ main .bg-white .about {
     color: #FFFFFF;
 }
 
-.h4_footer {
+.footer-subtitle {
     @include fontFamilyGeorgia();
     font-size: 20px;
     line-height: 115%;
@@ -856,11 +856,11 @@ main .bg-white .about {
     }
 }
 
-.footer-blok-info {
+.footer {
     @include flexRow();
 }
 
-.footer-style {
+.footer-subtext {
     @include flexRow();
     justify-content: flex-start;
     align-items: center;
@@ -869,27 +869,23 @@ main .bg-white .about {
     cursor: pointer;
 }
 
-.box_down1 {
-    margin-top: 22px;
-}
-
-.box_down2 {
+.box_down {
     margin-top: 22px;
 }
 
 @media (max-width: 1279px) {
-    .footer_container {
+    .contact {
         flex-wrap: wrap;
         margin-top: -3px;
         margin-left: 24px;
         margin-right: 6px;
     }
 
-    .footer-blok-info {
+    .footer {
         flex-wrap: wrap;
     }
 
-    .footer-info {
+    .box {
         margin-top: -3px;
     }
 
@@ -897,7 +893,7 @@ main .bg-white .about {
         margin-left: 33px;
     }
 
-    .footer-style {
+    .footer-subtext {
         @include flexRow();
         justify-content: flex-start;
         align-items: center;
@@ -905,15 +901,11 @@ main .bg-white .about {
         margin-top: -5px;
     }
 
-    .box_down1 {
+    .box_down {
         margin-top: 21px;
     }
 
-    .box_down2 {
-        margin-top: 21px;
-    }
-
-    .box_possition-right {
+    .picture {
         margin-left: 194px;
         margin-top: 55px;
     }
