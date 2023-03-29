@@ -21,14 +21,14 @@ body.lock {
 }
 
 .content {
-    width: 100%; //1280px;
+    width: 100%; //1280px; 97%
     display: flex;
     justify-content: center;
 }
 
 .wrapper {
     width: 75rem; //1200px;
-    margin-left: 40px;
+    margin-left: 0px;
 }
 
 html {
@@ -162,6 +162,11 @@ header .wrapper .header .logo .logo-text {
     @extend %transition;
 }
 
+.nav-item a.active:hover {
+    color: #CDCDCD;
+    @extend %transition;
+}
+
 .nav-item a:hover:after,
 .nav-item a:focus:after {
     width: 100%;
@@ -185,6 +190,7 @@ header .wrapper .header .logo .logo-text {
         @extend %transition;
     }
 }
+
 
 @media (max-width: 1279px) {
     header .wrapper .header {
@@ -353,7 +359,7 @@ main .bg-white .about {
 
 .friends-text {
     height: 90px;
-    margin-left: 42px;
+    margin-left: 2px;
     margin-top: 80px;
     text-align: center;
 }
@@ -367,7 +373,7 @@ main .bg-white .about {
     @include btnArrow();
     transform: rotate(-180deg);
     margin-top: 193px;
-    margin-left: 60px;
+    margin-left: 40px;
     cursor: pointer;
     @extend %transition;
 
@@ -383,7 +389,7 @@ main .bg-white .about {
     position: reltive;
     @include btnArrow();
     margin-left: 54px;
-    margin-right: 20px;
+    margin-right: 40px;
     margin-top: 193px;
     cursor: pointer;
     @extend %transition;
@@ -416,7 +422,7 @@ main .bg-white .about {
 .cards {
     @include flexRow();
     justify-content: space-between;
-    margin-left: 53px;
+    margin-left: 55px;
     width: 80%;
 }
 
@@ -474,7 +480,6 @@ main .bg-white .about {
     background: #F1CDB3;
     border: 2px solid #F1CDB3;
     margin-top: 60px;
-    margin-left: 40px;
     margin-bottom: 100px;
     @extend %transition;
     cursor: pointer;

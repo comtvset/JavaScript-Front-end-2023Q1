@@ -46,7 +46,7 @@ a:visited {
   box-sizing: border-box;
 }
 
-.footer-subtitle:hover, .footer-subtitle:focus, .footer-subtitle:active, .btn:hover, .btn:active, .pet-card_btn:hover, .pet-card_btn:active, .pet-card:hover .pet-card_btn, .nav-link:hover, .nav-link:focus, .nav-link:active, .nav-link, .nav-item a.active:after {
+.footer-subtitle:hover, .footer-subtitle:focus, .footer-subtitle:active, .btn:hover, .btn:active, .pet-card_btn:hover, .pet-card_btn:active, .pet-card:hover .pet-card_btn, .nav-link:hover, .nav-link:focus, .nav-link:active, .nav-link, .nav-item a.active:hover, .nav-item a.active:after {
   transition: all 0.5s ease;
 }
 
@@ -124,6 +124,10 @@ header .wrapper .header .logo .logo-text {
   content: "";
   height: 3px;
   background-color: #F1CDB3;
+}
+
+.nav-item a.active:hover {
+  color: #545454;
 }
 
 .nav-item a:hover:after,
