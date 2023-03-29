@@ -21,7 +21,7 @@ body.lock {
 }
 
 .content {
-    width: 100%; //1280px; 97%
+    width: 100%; //1280px;
     display: flex;
     justify-content: center;
 }
@@ -195,7 +195,7 @@ header .wrapper .header .logo .logo-text {
 
 @media (max-width: 1279px) {
     header .wrapper .header {
-        margin-left: -10px;
+        margin-left: 30px;
     }
     .nav {
         margin-right: 32px;
@@ -267,7 +267,7 @@ main .wrapper .info .info-text .info-text_subtitle {
 @media (max-width: 1279px) {
     main .wrapper .info {
         @include flexColumn();
-        margin-left: 114px;
+        margin-left: 154px;
     }
     main .wrapper .info .info-text .info-text_title {
         width: 80%;
@@ -317,9 +317,12 @@ main .bg-white .about {
     line-height: 130%;
     letter-spacing: 0.06em;
     color: #545454;
-    width: 67%;
     height: 90px;
     margin-top: 0;
+}
+
+.about-title {
+    width: 67%;
 }
 
 .about-subtitle {
@@ -338,15 +341,17 @@ main .bg-white .about {
         @include flexColumn();
         flex-direction: column-reverse;
     }
+    .about-img {
+        margin-left: 215px;
+    }
     .img-property {
         margin-top: 11px;
         margin-left: 19px;
-        // margin-bottom: 95px;
     }
     .about-text {
         width: 80%;
         margin-top: 80px;
-        padding-left: 9px;
+        padding-left: 49px;
     }
     .about-title {
         width: 55%;
@@ -360,13 +365,13 @@ main .bg-white .about {
 
 .friends-text {
     height: 90px;
-    margin-left: 2px;
+    margin-left: 210px;
     margin-top: 80px;
     text-align: center;
 }
 
 .friends-title {
-    width: 100%;
+    width: 70%;
 }
 
 .left-btn {
@@ -414,9 +419,7 @@ main .bg-white .about {
     justify-content:center;
     background: #F6F6F6;
     width: 100%;
-    // height: 435px;
     margin-top: 61px;
-    // margin-left: 40px;
     max-width: 1280px;
 }
 
@@ -494,14 +497,15 @@ main .bg-white .about {
 }
 
 @media (max-width: 1279px) {
-    .friends-title {
-        width: 100%;
-    }
     .friends-text {
         height: 90px;
-        margin-left: 2px;
+        margin-left: 150px;
+        margin-right: 148px;
         margin-top: 80px;
         text-align: center;
+    }
+    .friends-title {
+        width: 100%;
     }
 
     .cards {
@@ -537,33 +541,52 @@ main .bg-white .about {
     }
 }
 
-/* ### HELP ### */
+@media (max-width: 1150px) {
+    .turn-off {
+        opacity: 0;
+        animation: any 0.5s forwards;
+    }
+    @keyframes any {
+        0% {
+            opacity: 1;
+          }
+          99% {
+            opacity: 0;
+            height: 200px;
+            width: 200px;
+          }
+          100% {
+            opacity: 0;
+            height: 0;
+            width: 0;
+          }
+      }
+}
 
+/* ### HELP ### */
 .help {
     @include flexColumn();
-    // justify-content: flex-start;
+    flex-wrap: wrap;
     align-items: center;
+    margin-bottom: 49px;
 }
 
 .help-text {
     padding-top: 80px;
-    margin-left: 171px;
+    margin-left: 156px;
     text-align: center;
+}
 
+.help-title {
+    width: 70%;
 }
 
 .help-list {
-    margin-top: 25px;
-    // width: 1160px;
-    width: 95%;
-    height: 281px;
-    margin-bottom: 100px;
-    margin-left: 35px;
     display: flex;
-    flex-direction: row;
     flex-wrap: wrap;
-    justify-content: flex-start;
-    align-content: flex-start;
+    gap: 0 119px;
+    justify-content: center;
+    padding-top: 24px;
 }
 
 .item-text_h4 {
@@ -575,135 +598,39 @@ main .bg-white .about {
 }
 
 .item {
+    margin-bottom: 26px;
     text-align: center;
-    width: 168px;
-    height: 113px;
-}
-
-.item1 {
-    width: 85px;
-    margin-left: 38px;
-    margin-right: 80px;
-}
-
-.item2 {
-    width: 150px;
-    margin-left: 38px;
-    margin-right: 80px;
-}
-
-.item3 {
-    width: 65px;
-    margin-left: 38px;
-    margin-right: 80px;
-}
-
-.item4 {
-    width: 155px;
-    margin-left: 37px;
-    margin-right: 82px;
-}
-
-.item5 {
-    width: 101px;
-    margin-left: 37px;
-}
-
-.item6 {
-    width: 89px;
-    margin-left: 123px;
-    margin-right: 120px;
-    margin-top: 55px;
-}
-
-.item7 {
-    width: 101px;
-    margin-left: 1px;
-    margin-right: 118px;
-    margin-top: 55px;
-}
-
-.item8 {
-    width: 168px;
-    margin-left: 1px;
-    margin-right: 117px;
-    margin-top: 55px;
-}
-
-.item9 {
-    width: 145px;
-    margin-top: 55px;
 }
 
 @media (max-width: 1279px) {
-
     .help-text {
-        margin-left: 130px;
+        margin-left: 0px;
+        display: flex;
+        justify-content: center;
+        width: 70%;
     }
 
     .help-list {
-        width: 708px;
-        height: 539px;
-        margin-left: 20px;
-        margin-bottom: 10px;
+        width: 90%;
+    }
+}
+
+@media (max-width: 768px) {
+    .help-list {
+        width: 100%;
+        padding: 0 69px;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        justify-content: center;
+        column-gap: 60px;
     }
 
-    .item1 {
-        width: 85px;
-        margin-left: 51px;
-        margin-right: 80px;
+    .help-text {
+        padding-bottom: 24px;
     }
 
-    .item2 {
-        width: 150px;
-        margin-left: 32px;
-        margin-right: 80px;
-    }
-
-    .item3 {
-        width: 65px;
-        margin-left: 43px;
-        margin-right: 80px;
-    }
-
-    .item4 {
-        width: 155px;
-        margin-left: 16px;
-        margin-right: 72px;
-        margin-top: 55px;
-    }
-
-    .item5 {
-        width: 101px;
-        margin-left: 30px;
-        margin-right: 12px;
-        margin-top: 55px;
-    }
-
-    .item6 {
-        width: 89px;
-        margin-left: 123px;
-        margin-right: 20px;
-        margin-top: 55px;
-    }
-
-    .item7 {
-        width: 101px;
-        margin-left: 43px;
-        margin-right: 60px;
-        margin-top: 55px;
-    }
-
-    .item8 {
-        width: 168px;
-        margin-left: 36px;
-        margin-right: 73px;
-        margin-top: 55px;
-    }
-
-    .item9 {
-        width: 145px;
-        margin-top: 55px;
+    .item {
+        margin-bottom: 27px;
     }
 }
 
@@ -731,7 +658,7 @@ main .bg-white .about {
 
 .donation-title {
     margin-top: 80px;
-    width: 300px;
+    width: 60%;
 }
 
 .donation-subtitle {
@@ -797,14 +724,20 @@ main .bg-white .about {
     }
 
     .donation-text {
-        margin-left: 154px;
+        margin-left: 194px;
         margin-bottom: 0px;
+    }
+
+    .donation-title {
+        width: 55%;
     }
 
     .donation-img {
         margin-top: 48px;
-        margin-left: 91px;
-        margin-bottom: 96px;
+        margin-bottom: 99px;
+        justify-content: center;
+        display: flex;
+        margin-left: 0px;
     }
 }
 
@@ -877,11 +810,13 @@ main .bg-white .about {
     .contact {
         flex-wrap: wrap;
         margin-top: -3px;
-        margin-left: 24px;
+        margin-left: 64px;
         margin-right: 6px;
     }
 
     .footer {
+        display: flex;
+        justify-content: space-between;
         flex-wrap: wrap;
     }
 
@@ -889,8 +824,9 @@ main .bg-white .about {
         margin-top: -3px;
     }
 
-    .box_possition-center {
+    .addres {
         margin-left: 33px;
+        margin-right: 65px;
     }
 
     .footer-subtext {
@@ -906,7 +842,7 @@ main .bg-white .about {
     }
 
     .picture {
-        margin-left: 194px;
+        margin-left: 234px;
         margin-top: 55px;
     }
 }
