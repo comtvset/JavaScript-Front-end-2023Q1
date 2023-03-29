@@ -162,6 +162,11 @@ header .wrapper .header .logo .logo-text {
     @extend %transition;
 }
 
+.nav-item a.active:hover {
+    color: #CDCDCD;
+    @extend %transition;
+}
+
 .nav-item a:hover:after,
 .nav-item a:focus:after {
     width: 100%;
@@ -185,6 +190,7 @@ header .wrapper .header .logo .logo-text {
         @extend %transition;
     }
 }
+
 
 @media (max-width: 1279px) {
     header .wrapper .header {

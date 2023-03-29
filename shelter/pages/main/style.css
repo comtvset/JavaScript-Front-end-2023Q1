@@ -47,7 +47,7 @@ a:visited {
   box-sizing: border-box;
 }
 
-.h4_footer:hover, .h4_footer:focus, .h4_footer:active, .donation-number:hover, .donation-number, .pet-btn:hover, .pet-btn:active, .pet-btn, .pet-card:hover .pet-card_btn, .pet-card:hover, .pet-card, .right-btn:hover, .right-btn:active, .right-btn, .left-btn:hover, .left-btn:active, .left-btn, .info-button:hover, .info-button:active, .info-button, .nav-link:hover, .nav-link:focus, .nav-link:active, .nav-link, .nav-item a.active:after {
+.h4_footer:hover, .h4_footer:focus, .h4_footer:active, .donation-number:hover, .donation-number, .pet-btn:hover, .pet-btn:active, .pet-btn, .pet-card:hover .pet-card_btn, .pet-card:hover, .pet-card, .right-btn:hover, .right-btn:active, .right-btn, .left-btn:hover, .left-btn:active, .left-btn, .info-button:hover, .info-button:active, .info-button, .nav-link:hover, .nav-link:focus, .nav-link:active, .nav-link, .nav-item a.active:hover, .nav-item a.active:after {
   transition: all 0.5s ease;
 }
 
@@ -124,6 +124,10 @@ header .wrapper .header .logo .logo-text {
   content: "";
   height: 3px;
   background-color: #F1CDB3;
+}
+
+.nav-item a.active:hover {
+  color: #CDCDCD;
 }
 
 .nav-item a:hover:after,
