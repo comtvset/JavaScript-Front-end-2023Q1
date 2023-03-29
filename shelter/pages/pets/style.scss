@@ -169,6 +169,7 @@ header .wrapper .header .logo .logo-text {
 .nav-item a.active:hover {
     color: #545454;
     @extend %transition;
+    cursor: default;
 }
 
 .nav-item a:hover:after,
