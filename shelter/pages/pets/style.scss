@@ -209,6 +209,81 @@ header .wrapper .header .logo .logo-text {
     }
 }
 
+@media (max-width: 767px) {
+    header .wrapper .header .logo {
+        margin-left: -10px;
+    }
+    .nav {
+        display: none;
+    }
+    .fbmenu {
+        z-index: 4;
+        position: relative;
+        height: 22px;
+        width: 30px;
+        cursor: pointer;
+        margin-left: -50px;
+      }
+
+      .fbmenu span,
+      .fbmenu::before,
+      .fbmenu::after {
+        left: 0;
+        position: absolute;
+        height: 10%;
+        width: 100%;
+        transition: all 0.3s ease 0s;
+        background-color: #545454;
+      }
+
+      .fbmenu::before,
+      .fbmenu::after {
+        content: "";
+      }
+
+      .fbmenu::before {
+        top: 0;
+      }
+
+      .fbmenu::after {
+        bottom: 0;
+      }
+
+      .fbmenu span {
+        top: 50%;
+        transform: scale(1) translate(0px, -50%);
+      }
+
+      .fbmenu._active span {
+        top: 50%;
+        left: -10px;
+        transform: rotate(90deg) translate(0px, 50%);
+       }
+
+      .fbmenu._active::before{
+        top: 50%;
+        left: 10px;
+        transform: rotate(90deg) translate(0px, 50%);
+      }
+
+      .fbmenu._active::after{
+        top: 50%;
+        transform: rotate(90deg) translate(0px, 50%);
+      }
+}
+
+@media (max-width: 340px) {
+    header .wrapper .header .logo {
+        margin-left: 27px;
+    }
+}
+
+@media (max-width: 320px) {
+    header .wrapper .header .logo {
+        margin-left: 27px;
+    }
+}
+
 /* ### FRIENDS ### */
 
 .all-title {
@@ -217,7 +292,6 @@ header .wrapper .header .logo .logo-text {
     line-height: 130%;
     letter-spacing: 0.06em;
     color: #545454;
-    width: 370px;
     height: 90px;
     margin-top: 0;
   }
@@ -226,10 +300,12 @@ header .wrapper .header .logo .logo-text {
     height: 90px;
     margin-top: 80px;
     text-align: center;
+    display: flex;
+    justify-content: center;
   }
 
   .friends-title {
-    width: 400px;
+    width: 70%;
   }
 
   .friends {
@@ -390,10 +466,58 @@ header .wrapper .header .logo .logo-text {
         margin-bottom: 174px;
         margin-top: -86px;
       }
-
       .turn-off {
         display: none;
-      }
+    }
+  }
+
+  @media (max-width: 767px) {
+    .all-title {
+        font-size: 25px;
+        text-align: center;
+        width: 100%;
+    }
+    .turn-off_320 {
+        display: none;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .cards {
+        margin-left: 50px;
+    }
+    .pet-card {
+        margin-right: 0px;
+    }
+    .button_down {
+        margin-bottom: 142px;
+        margin-left: 0px;
+        width: 320px;
+    }
+  }
+
+  @media (max-width: 320px) {
+    .deck {
+        margin-top: 17px;
+    }
+    .friends-text {
+        margin-top: 41px;
+    }
+    .cards {
+        display: flex;
+        align-content: center;
+        flex-direction: column;
+        // justify-content: center;
+        margin-left: 0;
+    }
+    .pet-card {
+        margin-right: 0;
+    }
+    .button_down {
+        margin-bottom: 142px;
+        margin-left: 0px;
+        width: 320px;
+    }
   }
 
   /* ### FOOTER ### */
@@ -475,6 +599,8 @@ header .wrapper .header .logo .logo-text {
     }
 
     .footer {
+        display: flex;
+        justify-content: space-between;
         flex-wrap: wrap;
     }
 
@@ -484,6 +610,7 @@ header .wrapper .header .logo .logo-text {
 
     .addres {
         margin-left: 33px;
+        margin-right: 65px;
     }
 
     .footer-subtext {
@@ -492,19 +619,138 @@ header .wrapper .header .logo .logo-text {
         align-items: center;
         height: 50px;
         margin-top: -6px;
-        margin-bottom: 27px;
+        margin-bottom: 2px;
     }
 
-    .box_down1 {
-        margin-top: 21px;
-    }
-
-    .box_down2 {
+    .box_down {
         margin-top: 21px;
     }
 
     .picture {
         margin-left: 194px;
-        margin-top: 29px;
+        margin-top: 52px;
     }
   }
+
+  @media (max-width: 767px) {
+    .footer {
+        flex-direction: row;
+        align-items: center;
+    }
+    .footer-title {
+        width: 90%;
+        font-size: 25px;
+        text-align: center;
+        margin-left: 14px;
+        margin-top: 38px;
+        margin-bottom: 10px;
+    }
+    .contact {
+        margin-top: -8px;
+        margin-bottom: 3px;
+        margin-left: 0px;
+        margin-right: 0px;
+    }
+    .addres {
+        margin-top: -12px;
+        margin-left: 0px;
+        margin-right: 0px;
+        margin-bottom: 0px;
+    }
+    .box_up {
+        margin-top: 1px;
+        margin-bottom: 8px;
+        margin-left: -6px;
+        padding-top: 19px;
+    }
+    .box {
+        margin-bottom: 1px;
+    }
+    .box_position_320 {
+        margin-left: -29px;
+        padding-top: 20px;
+    }
+    .footer-subtext {
+        justify-content: center;
+        margin-top: 20px;
+    }
+    .picture {
+        margin: 0;
+        width: 80%;
+        margin-top: 44px;
+    }
+}
+
+@media (max-width: 340px) {
+    .wrapper {
+        margin-left: 0;
+    }
+    .box_up {
+        margin: 0;
+    }
+    .footer-title {
+        margin-left: 0;
+        margin-right: 0;
+    }
+    .box_position_320 {
+        margin-left: 0px;
+    }
+}
+
+// @media (max-width: 321px) {
+//     .box_up {
+//         margin: 0;
+//     }
+//     .footer-title {
+//         margin-left: 0;
+//         margin-right: 0;
+//     }
+// }
+
+@media (max-width: 320px) {
+    .wrapper {
+        margin-left: 2px;
+    }
+    .footer {
+        flex-direction: column;
+        align-items: center;
+    }
+    .footer-title {
+        margin-left: 14px;
+        margin-right: 0;
+    }
+    .contact {
+        margin-top: -8px;
+        margin-bottom: 3px;
+        margin-left: 0px;
+        margin-right: 0px;
+    }
+    .addres {
+        margin-top: -12px;
+        margin-left: 0px;
+        margin-right: 0px;
+        margin-bottom: 0px;
+    }
+    .box_up {
+        margin-top: 1px;
+        margin-bottom: 8px;
+        margin-left: -6px;
+        padding-top: 19px;
+    }
+    .box {
+        margin-bottom: 1px;
+    }
+    .box_position_320 {
+        margin-left: -29px;
+        padding-top: 20px;
+    }
+    .footer-subtext {
+        justify-content: center;
+        margin-top: 20px;
+    }
+    .picture {
+        margin: 0;
+        width: 80%;
+        margin-top: 44px;
+    }
+}
