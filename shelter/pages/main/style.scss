@@ -208,6 +208,60 @@ header .wrapper .header .logo .logo-text {
     .nav {
         display: none;
     }
+    .fbmenu {
+        z-index: 4;
+        position: relative;
+        height: 22px;
+        width: 30px;
+        cursor: pointer;
+        margin-left: -50px;
+    }
+
+    .fbmenu span,
+    .fbmenu::before,
+    .fbmenu::after {
+        left: 0;
+        position: absolute;
+        height: 10%;
+        width: 100%;
+        transition: all 0.3s ease 0s;
+        background-color: #F1CDB3;
+    }
+
+    .fbmenu::before,
+    .fbmenu::after {
+        content: "";
+    }
+
+    .fbmenu::before {
+        top: 0;
+    }
+
+    .fbmenu::after {
+        bottom: 0;
+    }
+
+    .fbmenu span {
+        top: 50%;
+        transform: scale(1) translate(0px, -50%);
+    }
+
+    .fbmenu._active span {
+        top: 50%;
+        left: -10px;
+        transform: rotate(90deg) translate(0px, 50%);
+    }
+
+    .fbmenu._active::before {
+        top: 50%;
+        left: 10px;
+        transform: rotate(90deg) translate(0px, 50%);
+    }
+
+    .fbmenu._active::after {
+        top: 50%;
+        transform: rotate(90deg) translate(0px, 50%);
+    }
 }
 
 
