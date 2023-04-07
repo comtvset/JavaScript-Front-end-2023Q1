@@ -211,65 +211,127 @@ header .wrapper .header .logo .logo-text {
 
 @media (max-width: 767px) {
     header .wrapper .header .logo {
-        margin-left: -10px;
+        margin: 0;
     }
-    .nav {
-        display: none;
-    }
-    .fbmenu {
-        z-index: 4;
+    .burger {
+        z-index: 10;
         position: relative;
         height: 22px;
         width: 30px;
         cursor: pointer;
         margin-left: -50px;
-      }
+    }
 
-      .fbmenu span,
-      .fbmenu::before,
-      .fbmenu::after {
+    .burger span,
+    .burger::before,
+    .burger::after {
         left: 0;
         position: absolute;
         height: 10%;
         width: 100%;
         transition: all 0.3s ease 0s;
-        background-color: #545454;
-      }
+        background-color: #F1CDB3;
+    }
 
-      .fbmenu::before,
-      .fbmenu::after {
+    .burger::before,
+    .burger::after {
         content: "";
-      }
+    }
 
-      .fbmenu::before {
+    .burger::before {
         top: 0;
-      }
+    }
 
-      .fbmenu::after {
+    .burger::after {
         bottom: 0;
-      }
+    }
 
-      .fbmenu span {
+    .burger span {
         top: 50%;
         transform: scale(1) translate(0px, -50%);
-      }
+    }
 
-      .fbmenu._active span {
+    .burger._active span {
         top: 50%;
         left: -10px;
         transform: rotate(90deg) translate(0px, 50%);
-       }
+    }
 
-      .fbmenu._active::before{
+    .burger._active::before {
         top: 50%;
         left: 10px;
         transform: rotate(90deg) translate(0px, 50%);
-      }
+    }
 
-      .fbmenu._active::after{
+    .burger._active::after {
         top: 50%;
         transform: rotate(90deg) translate(0px, 50%);
+    }
+
+    .burger-menu {
+        display: block;
+        position: fixed;
+        top: 0;
+        left: 100%;
+        width: 320px;
+        height: 100%;
+        background-color: #292929;
+        padding-top: 214px;
+        margin: 0;
+        box-shadow: 2px 2px 6px rgba(0, 0, 0, .4);
+        transition: all 0.6s ease 0s;
+        z-index: 8;
+        padding-left: 0;
+        overflow-y: scroll;
+    }
+
+    .burger-menu._active {
+        transform: translate(-100%, 0px);
+    }
+
+    .overlay {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        opacity: 0;
+        transition: opacity .5s;
       }
+
+      .burger-menu._active + .overlay {
+        opacity: 1;
+      }
+      body._lock {
+        overflow: hidden;
+      }
+
+      .nav-item {
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        margin-top: 22px;
+    }
+
+    .nav-item a {
+        display: inline-block;
+        color: #CDCDCD;
+    }
+
+      .nav-link {
+        display: block;
+        color: #CDCDCD;
+        font-weight: 400;
+        font-size: 32px;
+        line-height: 51px;
+        text-decoration: none;
+        transition-duration: .25s;
+    }
+
+    .nav-link:hover {
+        background-color: #CFD8DC;
+    }
 }
 
 @media (max-width: 340px) {
