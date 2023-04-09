@@ -63,6 +63,7 @@ function close() {
         if(event.target.classList.contains('popup-close')) {
             popup.classList.toggle('open')
             bodyUnlock();
+            event.preventDefault();
         }
     })
 }
@@ -87,7 +88,7 @@ if (popupLinks.length > 0) {
                 const popupName = popupLink.getAttribute('href').replace('#', '');
                 getCurrentPet(pets, name)
                 const currentPopup = document.getElementById(popupName);
-                open(currentPopup)
+                open(currentPopup);
             })
         }
     }

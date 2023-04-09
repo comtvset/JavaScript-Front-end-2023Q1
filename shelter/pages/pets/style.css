@@ -805,8 +805,8 @@ header .wrapper .header .logo .logo-text {
 
 .img-class {
   width: 500px;
-  height: 490px;
   background-size: 100%;
+  height: 100%;
 }
 
 .cont-pop {

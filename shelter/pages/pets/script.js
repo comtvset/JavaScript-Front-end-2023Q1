@@ -62,6 +62,7 @@ function close() {
         if(event.target.classList.contains('popup-close')) {
             popup.classList.toggle('open')
             bodyUnlock();
+            event.preventDefault();
         }
     })
 }

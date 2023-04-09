@@ -885,8 +885,9 @@ header .wrapper .header .logo .logo-text {
 .img-class {
     // background-image: url("../../../shelter/assets/images/pets-jennifer.png");
     width: 500px;
-    height: 490px;
+    // height: 490px;
     background-size: 100%;
+    height: 100%;
 }
 
 .cont-pop {
@@ -982,6 +983,7 @@ ul {
     .img-class {
         width: 350px;
         height: 350px;
+        // height: 100%;
     }
 
     .cont-pop {
