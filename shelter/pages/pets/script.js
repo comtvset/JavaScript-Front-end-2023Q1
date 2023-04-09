@@ -134,3 +134,13 @@ function getCurrentPet(pets, currentIndex) {
 
     return pets[currentIndex];
   }
+
+// PAGINATION
+
+
+
+// burger.addEventListener('click', activeBurger);
+
+// document.body.classList.toggle('lock');
+
+// popup.addEventListener('click', (event) => {}
