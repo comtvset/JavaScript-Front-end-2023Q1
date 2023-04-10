@@ -160,10 +160,12 @@ function random(min, max) {
 
 const IMGs = document.querySelectorAll('.pets-img');
 const NAMEs = document.querySelectorAll('.pet-card_h3');
+const petCards = document.querySelectorAll(".pet-card");
 
 for (let i = 0; i < IMGs.length; i++) {
     const IMG = IMGs[i];
     const NAME = NAMEs[i];
+    const petCard = petCards[i]
 
     btnRight.addEventListener('click', () => {
         let randomNum = random(0, 7);

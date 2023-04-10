@@ -403,6 +403,7 @@ header .wrapper .header .logo .logo-text {
   margin-left: 449px;
   margin-bottom: 197px;
   margin-top: -65px;
+  z-index: 0;
 }
 
 .btn {
@@ -889,7 +890,7 @@ ul {
 }
 
 .popup-link {
-  z-index: 0;
+  z-index: auto;
 }
 
 @media (max-width: 1279px) {

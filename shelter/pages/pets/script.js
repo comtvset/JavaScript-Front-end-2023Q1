@@ -1,11 +1,5 @@
 import pets from '../../../shelter/pages/main/pets.js';
 
-// const body = document.querySelector('body');
-// body.addEventListener('click', (event) => {
-//     console.dir(event.target)
-// })
-
-
 const burger = document.querySelector('.burger');
 const burgerMenu = document.querySelector('.burger-menu');
 const logo = document.querySelector('.logo');
@@ -13,6 +7,7 @@ const navigator = document.querySelector('.navigator');
 const overlay = document.createElement('div');
 overlay.classList.add('overlay');
 navigator.appendChild(overlay);
+const popupLinks = document.querySelectorAll('.popup-link');
 
 function bodyLock() {
     document.body.classList.toggle('lock');
@@ -33,6 +28,9 @@ function activeBurger() {
     burger.classList.toggle('_active');
     burgerMenu.classList.toggle('_active');
     bodyLock();
+    popupLinks.forEach(function(link) {
+        link.style.zIndex = "auto";
+      });
 }
 
 function deactiveBurger() {
@@ -41,10 +39,12 @@ function deactiveBurger() {
     logo.classList.remove('_active');
     document.body.classList.remove('lock');
     bodyUnlock();
+    popupLinks.forEach(function(link) {
+        link.style.zIndex = "0";
+      });
 }
 
 // POPUP
-const popupLinks = document.querySelectorAll('.popup-link');
 const popup = document.querySelector('.popup');
 
 
@@ -136,11 +136,220 @@ function getCurrentPet(pets, currentIndex) {
   }
 
 // PAGINATION
+const screenWidth = window.screen.width;
+
+const endLeftbtn = document.getElementById('end-left-btn');
+const leftBtn = document.getElementById('left-btn');
+const numberBtn = document.getElementById('number-btn');
+const rightBtn = document.getElementById('right-btn');
+const endRightbtn = document.getElementById('end-right-btn');
+
+numberBtn.classList.add('active-btn');
+
+let currentPage = 1;
+endLeftbtn.classList.add('gray-style');
+leftBtn.classList.add('gray-style');
+
+function updatePageNumber() {
+    numberBtn.textContent = currentPage;
+    if (screenWidth <= 767 && screenWidth >= 320) {
+        if (currentPage === 16) {
+            endRightbtn.classList.add('gray-style');
+            rightBtn.classList.add('gray-style');
+        }
+    }
+    if (screenWidth >= 768 && screenWidth <= 1279) {
+        if (currentPage === 8) {
+            endRightbtn.classList.add('gray-style');
+            rightBtn.classList.add('gray-style');
+        }
+    }
+    if (screenWidth >= 1280) {
+        if (currentPage === 6) {
+            endRightbtn.classList.add('gray-style');
+            rightBtn.classList.add('gray-style');
+        }
+    }
+
+    if (currentPage === 1) {
+        endLeftbtn.classList.add('gray-style');
+        leftBtn.classList.add('gray-style');
+    }
+}
+
+function decrementPage() {
+  if (currentPage > 1) {
+      currentPage--;
+      updatePageNumber();
+      endRightbtn.classList.remove('gray-style');
+      rightBtn.classList.remove('gray-style');
+  }
+}
+
+function incrementPage() {
+    if (screenWidth <= 767 && screenWidth >= 320) {
+        if (currentPage < 16) {
+            currentPage++;
+            updatePageNumber();
+            endLeftbtn.classList.remove('gray-style');
+            leftBtn.classList.remove('gray-style');
+        }
+    }
+    if (screenWidth >= 768 && screenWidth <= 1279) {
+        if (currentPage < 8) {
+            currentPage++;
+            updatePageNumber();
+            endLeftbtn.classList.remove('gray-style');
+            leftBtn.classList.remove('gray-style');
+        }
+    }
+    if (screenWidth >= 1280) {
+        if (currentPage < 6) {
+            currentPage++;
+            updatePageNumber();
+            endLeftbtn.classList.remove('gray-style');
+            leftBtn.classList.remove('gray-style');
+        }
+    }
+}
+
+function goToFirstPage() {
+    currentPage = 1;
+    updatePageNumber();
+    endRightbtn.classList.remove('gray-style');
+    rightBtn.classList.remove('gray-style');
+}
+
+function goToLastPage() {
+    if (screenWidth <= 767 && screenWidth >= 320) {
+        currentPage = 16;
+        updatePageNumber();
+        endLeftbtn.classList.remove('gray-style');
+        leftBtn.classList.remove('gray-style');
+    }
+    if (screenWidth >= 768 && screenWidth <= 1279) {
+        currentPage = 8;
+        updatePageNumber();
+        endLeftbtn.classList.remove('gray-style');
+        leftBtn.classList.remove('gray-style');
+    }
+    if (screenWidth >= 1280) {
+        currentPage = 6;
+        updatePageNumber();
+        endLeftbtn.classList.remove('gray-style');
+        leftBtn.classList.remove('gray-style');
+    }
+}
+
+endLeftbtn.addEventListener('click', goToFirstPage);
+leftBtn.addEventListener('click', decrementPage);
+numberBtn.addEventListener('click', updatePageNumber);
+rightBtn.addEventListener('click', incrementPage);
+endRightbtn.addEventListener('click', goToLastPage);
 
 
+let nums = [0, 1, 2, 3, 4, 5, 6, 7];
 
-// burger.addEventListener('click', activeBurger);
+function random() {
+  if (nums.length === 0) {
+      nums = [0, 1, 2, 3, 4, 5, 6, 7];
+  }
+  const index = Math.floor(Math.random() * nums.length);
+  const num = nums[index];
+  nums.splice(index, 1);
+  return num;
+}
 
-// document.body.classList.toggle('lock');
+const IMGs = document.querySelectorAll('.pets-img');
+const NAMEs = document.querySelectorAll('.pet-card_h3');
 
-// popup.addEventListener('click', (event) => {}
+for (let i = 0; i < IMGs.length; i++) {
+    const IMG = IMGs[i];
+    const NAME = NAMEs[i];
+    let current = 1;
+
+    rightBtn.addEventListener('click', () => {
+        if (screenWidth <= 767 && screenWidth >= 320) {
+            if(current < 16) {
+                let randomNum = random(0, 7);
+                IMG.src = pets[randomNum].img;
+                NAME.innerHTML = pets[randomNum].name;
+                current++;
+            }
+        }
+        if (screenWidth >= 768 && screenWidth <= 1279) {
+            if(current < 8) {
+                let randomNum = random(0, 7);
+                IMG.src = pets[randomNum].img;
+                NAME.innerHTML = pets[randomNum].name;
+                current++;
+            }
+        }
+        if (screenWidth >= 1280) {
+            if(current < 6) {
+                let randomNum = random(0, 7);
+                IMG.src = pets[randomNum].img;
+                NAME.innerHTML = pets[randomNum].name;
+                current++;
+            }
+        }
+    });
+
+    leftBtn.addEventListener('click', () => {
+        if(current > 1) {
+            let randomNum = random(0, 7);
+            IMG.src = pets[randomNum].img;
+            NAME.innerHTML = pets[randomNum].name;
+            current--;
+        }
+    });
+
+    endRightbtn.addEventListener('click', () => {
+        if (screenWidth <= 767 && screenWidth >= 320) {
+            if(current < 16) {
+                let randomNum = random(0, 7);
+                IMG.src = pets[randomNum].img;
+                NAME.innerHTML = pets[randomNum].name;
+                current = currentPage;
+            }
+        }
+        if (screenWidth >= 768 && screenWidth <= 1279) {
+            if(current < 8) {
+                let randomNum = random(0, 7);
+                IMG.src = pets[randomNum].img;
+                NAME.innerHTML = pets[randomNum].name;
+                current = currentPage;
+            }
+        }
+        if (screenWidth >= 1280) {
+            if(current < 6) {
+                let randomNum = random(0, 7);
+                IMG.src = pets[randomNum].img;
+                NAME.innerHTML = pets[randomNum].name;
+                current = currentPage;
+            }
+        }
+    });
+
+    endLeftbtn.addEventListener('click', () => {
+        if(current > 1) {
+            let randomNum = random(0, 7);
+            IMG.src = pets[randomNum].img;
+            NAME.innerHTML = pets[randomNum].name;
+            current = currentPage;
+        }
+    });
+}
+
+
+window.addEventListener('resize', function() {
+    if (window.innerWidth > 1280) {
+        location.reload();
+      }
+    if (window.innerWidth < 1279) {
+      location.reload();
+    }
+    if (window.innerWidth <= 767 && window.innerWidth >= 320) {
+        location.reload();
+      }
+  });
