@@ -17,11 +17,11 @@
                     <h1>Cozy House</h1>
                     <p class="logo-text">Shelter for pets in Boston</p>
                 </a>
-                <nav>
-                    <div class="fbmenu">
+                <nav class="navigator">
+                    <div class="burger">
                         <span></span>
                     </div>
-                    <ul class="nav menu__box" id="menu">
+                    <ul class="nav burger-menu" id="menu">
                         <li class="nav-item "><a href="#about" class="active nav-link">About the shelter</a></li>
                         <li class="nav-item"><a href="../../../shelter/pages/pets/index.html" class="nav-link">Our pets</a></li>
                         <li class="nav-item"><a href="#help" class="nav-link">Help the shelter</a></li>
@@ -70,22 +70,21 @@
                 <div class="cards">
                     <a href="#popup" class="popup-link">
                         <div class="pet-card">
-                            <!-- <a href="#popup" class="popup-link"></a> -->
-                            <img src="../../../shelter/assets/images/pets-katrine1.png" alt="Katrine" class="pets-katrine">
+                            <img src="../../../shelter/assets/images/pets-katrine1.png" alt="Katrine" class="pets-img">
                             <h3 class="pet-card_h3">Katrine</h3>
                             <div class="pet-card_btn">Learn more</div>
                         </div>
                     </a>
                     <a href="#popup" class="popup-link turn-off_320">
                         <div class="pet-card">
-                            <img src="../../../shelter/assets/images/pets-jennifer.png" alt="Jennifer" class="pets-jennifer">
+                            <img src="../../../shelter/assets/images/pets-jennifer.png" alt="Jennifer" class="pets-img">
                             <h3 class="pet-card_h3">Jennifer</h3>
                             <div class="pet-card_btn">Learn more</div>
                         </div>
                     </a>
                      <a href="#popup" class="popup-link turn-off">
                         <div class="pet-card">
-                            <img src="../../../shelter/assets/images/pets-woody.png" alt="Woody" class="pets-woody">
+                            <img src="../../../shelter/assets/images/pets-woody.png" alt="Woody" class="pets-img">
                             <h3 class="pet-card_h3">Woody</h3>
                             <div class="pet-card_btn">Learn more</div>
                         </div>
@@ -160,7 +159,6 @@
                 </div>
             </div>
         </section>
-
     </main>
 
     <footer>
@@ -200,6 +198,35 @@
             </div>
         </section>
     </footer>
-
+    <section>
+        <div id="popup" class="popup">
+            <div class="popup-body">
+                <div class="popup-content">
+                    <div class="wrapp-popup">
+                        <a href="#" class="popup-close close-popup pop-btn"><br>&#10006;</a>
+                        <img src="../../../shelter/assets/images/pets-jennifer.png" alt="img" class="img-class">
+                        <div class="cont-pop">
+                            <div class="popup-title">Jennifer</div>
+                            <div class="popup-subtitle">Dog - Labrador</div>
+                            <div class="popup-text">
+                                Jennifer is a sweet 2 months old Labrador that is patiently waiting
+                                to find a new forever home. This girl really enjoys being able to go
+                                outside to run and play, but won't hesitate to play up a storm in the
+                                house if she has all of her favorite toys.
+                            </div>
+                            <ul class="list-pets-pop">
+                                <li class="popup-list"><span class="ul_li">•</span><span class="popup-date">Age:</span><span class="pop-style list-age"> 2 months</span></li>
+                                <li class="popup-list"><span class="ul_li">•</span><span class="popup-date">Inoculations:</span><span class="pop-style list-inoculations"> none</span></li>
+                                <li class="popup-list"><span class="ul_li">•</span><span class="popup-date">Diseases:</span><span class="pop-style list-diseases"> none</span></li>
+                                <li class="popup-list"><span class="ul_li">•</span><span class="popup-date">Parasites:</span><span class="pop-style list-parasites"> none</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script type="module" src="script.js"></script>
+    <script type="module" src="pets.js"></script>
 </body>
 </html>
