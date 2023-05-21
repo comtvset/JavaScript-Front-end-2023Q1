@@ -30,8 +30,12 @@ sizes.forEach(function (size) {
 // Флаги
 const flag = document.createElement("div");
 flag.className = "flag";
+const flagIMG = document.createElement("img");
+flagIMG.src = "/minesweeper/assets/images/flag.jpg";
+flagIMG.alt = "flag";
+flag.appendChild(flagIMG);
 const flagText = document.createElement("h2");
-flagText.textContent = "flag: 10";
+flagText.textContent = ": 10";
 flag.appendChild(flagText);
 
 // Время
@@ -76,18 +80,64 @@ document.body.appendChild(container);
 
 let cell = document.createElement("div");
 
-function init(e, p) {
-    for (let i = 0; i < e; i++) {
-        let px = 100 / p;
-        cell = document.createElement("div");
+function init(countCells, scalingFactor, fieldSize) {
+    let cellsAll = [];
+    for (let i = 0; i < countCells; i++) {
+        let sizeCell = 100 / scalingFactor;
+        cell = document.createElement("button");
         cell.className = "cell";
         cell.id = i;
-        cell.style.height = `${px}px`;
-        cell.style.width = `${px}px`;
+        cell.style.height = `${sizeCell}px`;
+        cell.style.width = `${sizeCell}px`;
         gameField.appendChild(cell);
+        cellsAll.push(cell)
+        // console.log(cell.id)
     }
+
+
+    const cells = Array.from(gameField.getElementsByClassName('cell'));
+    let bombs = [];
+    let sizeCell = 100 / scalingFactor;
+    for (let i = 0; i < (countCells/10); i++) {
+        let randomIndex = Math.floor(Math.random() * cells.length);
+        const bombIMG = document.createElement("img");
+        bombIMG.src = "/minesweeper/assets/icons/icon.png";
+        bombIMG.alt = "bomb";
+        bombIMG.style.height = `${sizeCell-7}px`;
+        bombIMG.style.width = `${sizeCell-7}px`;
+        cell = cells[randomIndex];
+        cell.appendChild(bombIMG);
+        cell.classList.add("bomb");
+        cells.splice(randomIndex, 1);
+        bombs.push(cell);
+        cell.bombIMG = bombIMG;
+        bombIMG.style.display = "none";
+    }
+    bombs.sort((a, b) => a.id - b.id)
+    // console.dir(cellsAll)
+    // console.dir(cells)
+    // console.dir(bombs)
+    gameField.addEventListener('click', (event) => {
+        const index = cells.indexOf(event.target);
+        const column = index % fieldSize;
+        const row = Math.floor(index / fieldSize);
+        isBomb(row, column)
+        if (event.target.classList.value == "cell bomb") {
+            event.target.bombIMG.style.display = "block";
+            console.log('GAME OVER')
+        }
+    })
+
+    function isBomb(row, column) {
+        const index = row * fieldSize + column;
+        // console.log(index)
+        return bombs.includes(index);
+    }
+
 }
-init(100, 2);
+init(100, 2, 10);
+
+
 
 const choice = document.querySelector('.choice');
 
@@ -99,15 +149,15 @@ choice.addEventListener('change', function(event) {
   }
 
   if (selectedOption === '10x10') {
-    init(100, 2);
+    init(100, 2, 10);
   }
 
   if (selectedOption === '15x15') {
-    init(225, 3);
+    init(225, 3, 15);
   }
 
   if (selectedOption === '25x25') {
-    init(625, 5);
+    init(625, 5, 25);
   }
 });
 
