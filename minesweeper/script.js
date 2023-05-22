@@ -31,7 +31,7 @@ sizes.forEach(function (size) {
 const flag = document.createElement("div");
 flag.className = "flag";
 const flagIMG = document.createElement("img");
-flagIMG.src = "../minesweeper/assets/images/flag.jpg";
+flagIMG.src = "./assets/images/flag.jpg";
 flagIMG.alt = "flag";
 flag.appendChild(flagIMG);
 const flagText = document.createElement("h2");
@@ -124,7 +124,7 @@ function init(WIDTH, HEIGHT, BOMBS_COUNT, SIZE_CELL) {
         const bombSIZE = 400/WIDTH;
 
         if (isBomb(row, column)) {
-            bombIMG.src = "../minesweeper/assets/icons/icon.png";
+            bombIMG.src = "./assets/icons/icon.png";
             bombIMG.alt = "bomb";
             bombIMG.style.height = `${bombSIZE}px`;
             bombIMG.style.width = `${bombSIZE}px`;
