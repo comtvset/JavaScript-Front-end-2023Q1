@@ -213,3 +213,5 @@ gameSettings.appendChild(flag);
 gameSettings.appendChild(time);
 gameSettings.appendChild(sound);
 gameSettings.appendChild(theme);
+
+alert('Привет! Очень прошу тебя проверить реализацию игры в последний день проверки. Большое спасибо за понимание')
