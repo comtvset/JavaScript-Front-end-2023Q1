@@ -80,63 +80,66 @@ document.body.appendChild(container);
 
 let cell = document.createElement("div");
 
-function init(countCells, scalingFactor, fieldSize) {
-    let cellsAll = [];
-    for (let i = 0; i < countCells; i++) {
-        let sizeCell = 100 / scalingFactor;
-        cell = document.createElement("button");
-        cell.className = "cell";
-        cell.id = i;
-        cell.style.height = `${sizeCell}px`;
-        cell.style.width = `${sizeCell}px`;
-        gameField.appendChild(cell);
-        cellsAll.push(cell)
-        // console.log(cell.id)
-    }
 
+init(10,10,10,50);
 
-    const cells = Array.from(gameField.getElementsByClassName('cell'));
-    let bombs = [];
-    let sizeCell = 100 / scalingFactor;
-    for (let i = 0; i < (countCells/10); i++) {
-        let randomIndex = Math.floor(Math.random() * cells.length);
-        const bombIMG = document.createElement("img");
-        bombIMG.src = "/minesweeper/assets/icons/icon.png";
-        bombIMG.alt = "bomb";
-        bombIMG.style.height = `${sizeCell-7}px`;
-        bombIMG.style.width = `${sizeCell-7}px`;
-        cell = cells[randomIndex];
-        cell.appendChild(bombIMG);
-        cell.classList.add("bomb");
-        cells.splice(randomIndex, 1);
-        bombs.push(cell);
-        cell.bombIMG = bombIMG;
-        bombIMG.style.display = "none";
-    }
-    bombs.sort((a, b) => a.id - b.id)
-    // console.dir(cellsAll)
-    // console.dir(cells)
-    // console.dir(bombs)
+function init(WIDTH, HEIGHT, BOMBS_COUNT, SIZE_CELL) {
+    const cellsCount = WIDTH * HEIGHT;
+    gameField.innerHTML = `<button class="cell" style="height: ${SIZE_CELL}px; width: ${SIZE_CELL}px"></button>`.repeat(cellsCount);
+    const cells = [...gameField.children];
+
+    const bombs = [...Array(cellsCount).keys()]
+    .sort(() => Math.random() - 0.5)
+    .slice(0, BOMBS_COUNT);
+
     gameField.addEventListener('click', (event) => {
-        const index = cells.indexOf(event.target);
-        const column = index % fieldSize;
-        const row = Math.floor(index / fieldSize);
-        isBomb(row, column)
-        if (event.target.classList.value == "cell bomb") {
-            event.target.bombIMG.style.display = "block";
-            console.log('GAME OVER')
+        if (event.target.tagName !== 'BUTTON') {
+            return;
         }
-    })
+
+        // console.log(bombs)
+
+        const index = cells.indexOf(event.target);
+        const column = index % WIDTH;
+        const row = Math.floor(index / WIDTH);
+        open(row, column);
+    });
+
+    function getCount(row, column) {
+        let count = 0;
+        for (let x = -1; x <= 1; x++) {
+            for (let y = -1; y <= 1; y++) {
+                if(isBomb(row + y, column + x)) {
+                    count++
+                }
+            }
+        }
+        return count;
+    }
+
+       function open(row, column) {
+        const index = row * WIDTH + column;
+        const cell = cells[index];
+        const bombIMG = document.createElement("img");
+        const bombSIZE = 400/WIDTH;
+
+        if (isBomb(row, column)) {
+            bombIMG.src = "/minesweeper/assets/icons/icon.png";
+            bombIMG.alt = "bomb";
+            bombIMG.style.height = `${bombSIZE}px`;
+            bombIMG.style.width = `${bombSIZE}px`;
+            cell.appendChild(bombIMG);
+          } else {
+            cell.innerHTML = getCount(row, column);
+          }
+        cell.disabled = true;
+    }
 
     function isBomb(row, column) {
-        const index = row * fieldSize + column;
-        // console.log(index)
+        const index = row * WIDTH + column;
         return bombs.includes(index);
     }
-
 }
-init(100, 2, 10);
-
 
 
 const choice = document.querySelector('.choice');
@@ -149,15 +152,15 @@ choice.addEventListener('change', function(event) {
   }
 
   if (selectedOption === '10x10') {
-    init(100, 2, 10);
+    init(10,10,10,50);
   }
 
   if (selectedOption === '15x15') {
-    init(225, 3, 15);
+    init(15,15,20,33.333);
   }
 
   if (selectedOption === '25x25') {
-    init(625, 5, 25);
+    init(25,25,50,20);
   }
 });
 
