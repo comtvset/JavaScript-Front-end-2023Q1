@@ -81,12 +81,16 @@ document.body.appendChild(container);
 let cell = document.createElement("div");
 
 
-init(10,10,10,50);
+init(10,10,1,50);
 
 function init(WIDTH, HEIGHT, BOMBS_COUNT, SIZE_CELL) {
     const cellsCount = WIDTH * HEIGHT;
     gameField.innerHTML = `<button class="cell" style="height: ${SIZE_CELL}px; width: ${SIZE_CELL}px"></button>`.repeat(cellsCount);
     const cells = [...gameField.children];
+    let closedCount = cellsCount;
+
+    flagText.textContent = `: ${BOMBS_COUNT}`;
+    flag.appendChild(flagText);
 
     const bombs = [...Array(cellsCount).keys()]
     .sort(() => Math.random() - 0.5)
@@ -97,13 +101,48 @@ function init(WIDTH, HEIGHT, BOMBS_COUNT, SIZE_CELL) {
             return;
         }
 
-        // console.log(bombs)
+        const index = cells.indexOf(event.target);
+        const column = index % WIDTH;
+        const row = Math.floor(index / WIDTH);
+
+        const cell = cells[index];
+        const isCellOpen = cell.disabled;
+        const hasFlag = cell.classList.contains('flag1');
+
+        if (isCellOpen) {
+            return;
+        }
+
+        if (hasFlag) {
+            toggleFlag(row, column);
+        } else {
+            open(row, column);
+        }
+    });
+
+    gameField.addEventListener('contextmenu', (event) => {
+        event.preventDefault();
+        if (event.target.tagName !== 'BUTTON') {
+            return;
+        }
 
         const index = cells.indexOf(event.target);
         const column = index % WIDTH;
         const row = Math.floor(index / WIDTH);
-        open(row, column);
+
+        const cell = cells[index];
+        const isCellOpen = cell.disabled;
+
+        if (isCellOpen) {
+            return;
+        }
+
+        toggleFlag(row, column);
     });
+
+    function isValid(row, column) {
+        return row >= 0 && row < HEIGHT && column >= 0 && column < WIDTH;
+    }
 
     function getCount(row, column) {
         let count = 0;
@@ -117,28 +156,170 @@ function init(WIDTH, HEIGHT, BOMBS_COUNT, SIZE_CELL) {
         return count;
     }
 
-       function open(row, column) {
-        const index = row * WIDTH + column;
-        const cell = cells[index];
-        const bombIMG = document.createElement("img");
-        const bombSIZE = 400/WIDTH;
-
+    function showCellContent(cell, row, column) {
         if (isBomb(row, column)) {
+            const bombIMG = document.createElement("img");
+            const bombSIZE = 400 / WIDTH;
             bombIMG.src = "./assets/icons/icon.png";
             bombIMG.alt = "bomb";
             bombIMG.style.height = `${bombSIZE}px`;
             bombIMG.style.width = `${bombSIZE}px`;
             cell.appendChild(bombIMG);
-          } else {
-            cell.innerHTML = getCount(row, column);
-          }
+        } else {
+            const count = getCount(row, column);
+            if (count !== 0) {
+                if (count === 1) {
+                    cell.style.color = '#00009899';
+                }
+                if (count === 2) {
+                    cell.style.color = '#005000';
+                }
+                if (count === 3) {
+                    cell.style.color = '#6c0000a6';
+                }
+                if (count === 4) {
+                    cell.style.color = '#848400';
+                }
+                if (count === 5) {
+                    cell.style.color = 'orange';
+                }
+                cell.innerHTML = count;
+                cell.style.fontWeight = 'bold';
+            }
+        }
+    }
+
+    function open(row, column) {
+        if (!isValid(row, column)) return;
+
+        const index = row * WIDTH + column;
+        const cell = cells[index];
+
+        if (cell.disabled === true || cell.classList.contains('flag-red')) return;
+
         cell.disabled = true;
+
+        if (isBomb(row, column)) {
+            playSound(1);
+            removeFlagClasses();
+            alert('Game over');
+            openAllCells();
+            setTimeout(function() {
+                playSound(2);
+              }, 2000);
+            return;
+        } else {
+            const count = getCount(row, column);
+            if (count !== 0) {
+                showCellContent(cell, row, column);
+                closedCount--;
+                if (closedCount <= BOMBS_COUNT) {
+                    alert('Win');
+                    playSound(3);
+                    // openAllCells();
+                    return;
+                }
+                return;
+            }
+        }
+
+        closedCount--;
+
+        if (closedCount < BOMBS_COUNT) {
+            alert('Win');
+            // openAllCells()
+            return;
+        }
+
+        for (let x = -1; x <= 1; x++) {
+            for (let y = -1; y <= 1; y++) {
+                open(row + y, column + x);
+            }
+        }
+    }
+
+    function openAllCells() {
+        removeFlagClasses();
+        for (let i = 0; i < cells.length; i++) {
+            const cell = cells[i];
+            const row = Math.floor(i / WIDTH);
+            const column = i % WIDTH;
+
+            cell.disabled = true;
+            showCellContent(cell, row, column);
+        }
     }
 
     function isBomb(row, column) {
+        if(!isValid(row, column)) return false;
+
         const index = row * WIDTH + column;
         return bombs.includes(index);
     }
+
+    function toggleFlag(row, column) {
+        const index = row * WIDTH + column;
+        const cell = cells[index];
+
+        if (cell.disabled) {
+            cell.disabled = false;
+            cell.classList.remove('flag-red');
+        } else {
+            if (!cell.innerHTML && event.button === 2) {
+            cell.classList.toggle('flag-red');
+            }
+        }
+
+        const flaggedCells = document.querySelectorAll('.flag-red');
+
+        if (flaggedCells.length > BOMBS_COUNT) {
+            cell.classList.remove('flag-red');
+        return;
+    }
+        updateFlagCount();
+    }
+
+    function updateFlagCount() {
+        const flaggedCells = document.querySelectorAll('.flag-red');
+        const flagCount = BOMBS_COUNT - flaggedCells.length;
+        flagText.textContent = `: ${flagCount}`;
+    }
+
+    function removeFlagClasses() {
+        cells.forEach(cell => {
+            cell.classList.remove('flag-red');
+        });
+    }
+
+    cells.forEach(cell => {
+        cell.addEventListener('mousedown', (event) => {
+            if (event.button === 2) {
+                event.preventDefault();
+            }
+        });
+    });
+
+    function playSound(event) {
+        // sound.currentTime = 0; // Сбросить текущую позицию аудио
+        const audio = document.createElement('audio');
+        const source = document.createElement('source');
+
+        if(event == 1) {
+            source.src = './assets/sounds/boom.mp3';
+        }
+        if(event == 2) {
+            source.src = './assets/sounds/fail2.mp3';
+        }
+        if(event == 3) {
+            source.src = './assets/sounds/win2.mp3';
+        }
+
+        source.type = 'audio/mpeg';
+
+        audio.appendChild(source);
+        audio.play();
+      }
+
 }
 
 
@@ -198,7 +379,7 @@ function formatTime(seconds) {
   return `${formattedMinutes}:${formattedSeconds}`;
 }
 
-// gameSettings.appendChild(time);
+gameSettings.appendChild(time);
 
 choice.addEventListener('change', function(event) {
   resetTimer();
@@ -213,5 +394,3 @@ gameSettings.appendChild(flag);
 gameSettings.appendChild(time);
 gameSettings.appendChild(sound);
 gameSettings.appendChild(theme);
-
-alert('Привет! Очень прошу тебя проверить реализацию игры в последний день проверки. Большое спасибо за понимание')
