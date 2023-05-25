@@ -130,6 +130,15 @@ function formatTime(seconds) {
 
 gameSettings.appendChild(time);
 
+let WIDTH = 0;
+let HEIGHT = 0;
+let BOMBS_COUNT = 0;
+let SIZE_CELL = 0;
+let bombs;
+let mute = true;
+let cells;
+let closedCount;
+
 
 let htmlElement = document.querySelector('html');
 const choice = document.querySelector('.choice');
@@ -137,22 +146,28 @@ const choice = document.querySelector('.choice');
 
 let cellsCount = 10 * 10;
     gameField.innerHTML = `<button class="cell" style="height: 50px; width: 50px"></button>`.repeat(cellsCount);
-    let cells = [...gameField.children];
+    cells = [...gameField.children];
 
-function init(WIDTH, HEIGHT, BOMBS_COUNT, SIZE_CELL) {
+function init(_WIDTH, _HEIGHT, _BOMBS_COUNT, _SIZE_CELL) {
+
+        WIDTH = _WIDTH;
+        HEIGHT = _HEIGHT;
+        BOMBS_COUNT = _BOMBS_COUNT;
+        SIZE_CELL = _SIZE_CELL;
+        cellsCount = WIDTH * HEIGHT;
+
+        closedCount = cellsCount;
+
     cellsCount = WIDTH * HEIGHT;
     gameField.innerHTML = `<button class="cell" style="height: ${SIZE_CELL}px; width: ${SIZE_CELL}px"></button>`.repeat(cellsCount);
     cells = [...gameField.children];
 
-
     flagText.textContent = `: ${BOMBS_COUNT}`;
     flag.appendChild(flagText);
 
-    const bombs = [...Array(cellsCount).keys()]
+    bombs = [...Array(cellsCount).keys()]
     .sort(() => Math.random() - 0.5)
     .slice(0, BOMBS_COUNT);
-
-    let mute = true;
 
     theme.onclick = function() {
         if (theme.classList.contains('moon')) {
@@ -184,6 +199,7 @@ function init(WIDTH, HEIGHT, BOMBS_COUNT, SIZE_CELL) {
             sound.currentTime = 0;
         }
     };
+}
 
     let clickHandler = (event) => {
         if (event.target.tagName !== 'BUTTON') {
@@ -227,6 +243,9 @@ function init(WIDTH, HEIGHT, BOMBS_COUNT, SIZE_CELL) {
 
         toggleFlag(row, column);
     };
+
+    gameField.addEventListener('click', clickHandler);
+    gameField.addEventListener('contextmenu', rightClickHandler);
 
     function isValid(row, column) {
         return row >= 0 && row < HEIGHT && column >= 0 && column < WIDTH;
@@ -277,8 +296,6 @@ function init(WIDTH, HEIGHT, BOMBS_COUNT, SIZE_CELL) {
         }
     }
 
-    let closedCount = cellsCount;
-
     function open(row, column) {
         if (!isValid(row, column)) return;
 
@@ -296,7 +313,7 @@ function init(WIDTH, HEIGHT, BOMBS_COUNT, SIZE_CELL) {
             stopTimer();
             alert(`Game over, your time: ${finalTime}`);
             openAllCells();
-            gameField.classList.add('field-disabled');
+            // gameField.classList.add('field-disabled');
 
             setTimeout(function() {
                 playSound(2);
@@ -313,7 +330,7 @@ function init(WIDTH, HEIGHT, BOMBS_COUNT, SIZE_CELL) {
                     playSound(3);
                     stopTimer();
                     alert(`Win, your time: ${finalTime}`);
-                    gameField.classList.add('field-disabled');
+                    // gameField.classList.add('field-disabled');
                     // openAllCells();
                 }
                 return;
@@ -325,7 +342,7 @@ function init(WIDTH, HEIGHT, BOMBS_COUNT, SIZE_CELL) {
         if (closedCount < BOMBS_COUNT) {
             stopTimer();
             alert(`Win, your time: ${finalTime}`);
-            gameField.classList.add('field-disabled');
+            // gameField.classList.add('field-disabled');
             // openAllCells()
             return;
         }
@@ -353,6 +370,7 @@ function init(WIDTH, HEIGHT, BOMBS_COUNT, SIZE_CELL) {
         if(!isValid(row, column)) return false;
 
         const index = row * WIDTH + column;
+        console.log(bombs.includes(index))
         return bombs.includes(index);
     }
 
@@ -399,9 +417,6 @@ function init(WIDTH, HEIGHT, BOMBS_COUNT, SIZE_CELL) {
         });
     });
 
-    gameField.addEventListener('click', clickHandler);
-    gameField.addEventListener('contextmenu', rightClickHandler);
-
     function playSound(event) {
         // sound.currentTime = 0; // Сбросить текущую позицию аудио
         const audio = document.createElement('audio');
@@ -432,9 +447,10 @@ function init(WIDTH, HEIGHT, BOMBS_COUNT, SIZE_CELL) {
     }
 
     reload.addEventListener('click', function(event) {
-        location.reload();
+        init(WIDTH, HEIGHT, BOMBS_COUNT, SIZE_CELL);
+        resetTimer();
     });
-}
+
 
 choice.addEventListener('change', function(event) {
     const selectedOption = event.target.value;
@@ -444,15 +460,15 @@ choice.addEventListener('change', function(event) {
     }
 
     if (selectedOption === '10x10') {
-        init(10,10,10,50); // ВСЕ ЛОМАЕТСЯ ПОСЛЕ init()
+        init(10,10,10,50);
     }
 
     if (selectedOption === '15x15') {
-        init(15,15,20,33.333); // ВСЕ ЛОМАЕТСЯ ПОСЛЕ init()
+        init(15,15,20,33.333);
     }
 
     if (selectedOption === '25x25') {
-        init(25,25,50,20); // ВСЕ ЛОМАЕТСЯ ПОСЛЕ init()
+        init(25,25,50,20);
     }
 });
 
