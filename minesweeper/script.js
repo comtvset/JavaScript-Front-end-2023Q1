@@ -35,8 +35,19 @@ flagIMG.src = "./assets/images/flag.jpg";
 flagIMG.alt = "flag";
 flag.appendChild(flagIMG);
 const flagText = document.createElement("h2");
-flagText.textContent = ": 10";
+flagText.textContent = "10";
 flag.appendChild(flagText);
+
+// Шаги
+const step = document.createElement("div");
+step.className = "step";
+const stepIMG = document.createElement("img");
+stepIMG.src = "./assets/images/step.png";
+stepIMG.alt = "step";
+step.appendChild(stepIMG);
+const stepText = document.createElement("h2");
+stepText.textContent = "0";
+step.appendChild(stepText);
 
 // Время
 const time = document.createElement("div");
@@ -72,6 +83,7 @@ theme.appendChild(themeIMG);
 gameSettings.appendChild(select);
 gameSettings.appendChild(flag);
 gameSettings.appendChild(time);
+gameSettings.appendChild(step);
 gameSettings.appendChild(sound);
 gameSettings.appendChild(reload);
 gameSettings.appendChild(theme);
@@ -138,6 +150,7 @@ let bombs;
 let mute = true;
 let cells;
 let closedCount;
+let clickCount;
 
 
 let htmlElement = document.querySelector('html');
@@ -157,12 +170,13 @@ function init(_WIDTH, _HEIGHT, _BOMBS_COUNT, _SIZE_CELL) {
         cellsCount = WIDTH * HEIGHT;
 
         closedCount = cellsCount;
+        clickCount = 0;
 
     cellsCount = WIDTH * HEIGHT;
     gameField.innerHTML = `<button class="cell" style="height: ${SIZE_CELL}px; width: ${SIZE_CELL}px"></button>`.repeat(cellsCount);
     cells = [...gameField.children];
 
-    flagText.textContent = `: ${BOMBS_COUNT}`;
+    flagText.textContent = `${BOMBS_COUNT}`;
     flag.appendChild(flagText);
 
     bombs = [...Array(cellsCount).keys()]
@@ -205,6 +219,9 @@ function init(_WIDTH, _HEIGHT, _BOMBS_COUNT, _SIZE_CELL) {
         if (event.target.tagName !== 'BUTTON') {
             return;
         }
+
+        clickCount++;
+        stepText.textContent = `${clickCount}`;
 
         const index = cells.indexOf(event.target);
         const column = index % WIDTH;
@@ -311,7 +328,7 @@ function init(_WIDTH, _HEIGHT, _BOMBS_COUNT, _SIZE_CELL) {
             playSound(1);
             removeFlagClasses();
             stopTimer();
-            alert(`Game over, your time: ${finalTime}`);
+            alert(`Game over, your time: ${finalTime}; and your steps: ${clickCount}`);
             openAllCells();
             // gameField.classList.add('field-disabled');
 
@@ -329,7 +346,7 @@ function init(_WIDTH, _HEIGHT, _BOMBS_COUNT, _SIZE_CELL) {
                 if (closedCount <= BOMBS_COUNT) {
                     playSound(3);
                     stopTimer();
-                    alert(`Win, your time: ${finalTime}`);
+                    alert(`Win, your time: ${finalTime}; and your steps: ${clickCount}`);
                     // gameField.classList.add('field-disabled');
                     // openAllCells();
                 }
@@ -341,7 +358,7 @@ function init(_WIDTH, _HEIGHT, _BOMBS_COUNT, _SIZE_CELL) {
 
         if (closedCount < BOMBS_COUNT) {
             stopTimer();
-            alert(`Win, your time: ${finalTime}`);
+            alert(`Win, your time: ${finalTime}; and your steps: ${clickCount}`);
             // gameField.classList.add('field-disabled');
             // openAllCells()
             return;
@@ -402,7 +419,7 @@ function init(_WIDTH, _HEIGHT, _BOMBS_COUNT, _SIZE_CELL) {
     function updateFlagCount() {
         const flaggedCells = document.querySelectorAll('.flag-red');
         const flagCount = BOMBS_COUNT - flaggedCells.length;
-        flagText.textContent = `: ${flagCount}`;
+        flagText.textContent = `${flagCount}`;
     }
 
     function removeFlagClasses() {
@@ -449,6 +466,7 @@ function init(_WIDTH, _HEIGHT, _BOMBS_COUNT, _SIZE_CELL) {
     reload.addEventListener('click', function(event) {
         init(WIDTH, HEIGHT, BOMBS_COUNT, SIZE_CELL);
         resetTimer();
+        stepText.textContent = "0";
     });
 
 
@@ -461,14 +479,17 @@ choice.addEventListener('change', function(event) {
 
     if (selectedOption === '10x10') {
         init(10,10,10,50);
+        stepText.textContent = "0";
     }
 
     if (selectedOption === '15x15') {
         init(15,15,20,33.333);
+        stepText.textContent = "0";
     }
 
     if (selectedOption === '25x25') {
         init(25,25,50,20);
+        stepText.textContent = "0";
     }
 });
 
@@ -480,6 +501,7 @@ choice.addEventListener('change', function(event) {
 gameSettings.appendChild(select);
 gameSettings.appendChild(flag);
 gameSettings.appendChild(time);
+gameSettings.appendChild(step);
 gameSettings.appendChild(sound);
 gameSettings.appendChild(reload);
 gameSettings.appendChild(theme);
