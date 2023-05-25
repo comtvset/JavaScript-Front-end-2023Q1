@@ -47,22 +47,33 @@ time.appendChild(timeText);
 
 // Звук
 const sound = document.createElement("div");
+const soundIMG = document.createElement("img");
+soundIMG.src = "./assets/images/sound.png";
+soundIMG.alt = "sound";
 sound.className = "sound";
-const soundText = document.createElement("h2");
-soundText.textContent = "sound";
-sound.appendChild(soundText);
+sound.appendChild(soundIMG);
+
+// Перезагрузка
+const reload = document.createElement("div");
+reload.className = "reload";
+const reloadIMG = document.createElement("img");
+reloadIMG.src = "./assets/images/reload.png";
+reloadIMG.alt = "reload";
+reload.appendChild(reloadIMG);
 
 // Тема
 const theme = document.createElement("div");
 theme.className = "theme";
-const themeText = document.createElement("h2");
-themeText.textContent = "white";
-theme.appendChild(themeText);
+const themeIMG = document.createElement("img");
+themeIMG.src = `./assets/images/sun.png`;
+themeIMG.alt = "theme";
+theme.appendChild(themeIMG);
 
 gameSettings.appendChild(select);
 gameSettings.appendChild(flag);
 gameSettings.appendChild(time);
 gameSettings.appendChild(sound);
+gameSettings.appendChild(reload);
 gameSettings.appendChild(theme);
 
 // Игровое поле
@@ -78,16 +89,61 @@ container.appendChild(game);
 
 document.body.appendChild(container);
 
-let cell = document.createElement("div");
+let timerId;
+let seconds = 0;
+let isTimerRunning = false;
+let finalTime;
+
+function startTimer() {
+  if (!isTimerRunning) {
+    timerId = setInterval(updateTime, 1000);
+    isTimerRunning = true;
+  }
+}
+
+function stopTimer() {
+    clearInterval(timerId);
+    isTimerRunning = false;
+    finalTime = formatTime(seconds);
+  }
+
+function resetTimer() {
+  clearInterval(timerId);
+  seconds = 0;
+  updateTime();
+  isTimerRunning = false;
+}
+
+function updateTime() {
+  const formattedTime = formatTime(seconds);
+  timeText.textContent = formattedTime;
+  seconds++;
+}
+
+function formatTime(seconds) {
+  const minutes = Math.floor(seconds / 60);
+  const secondsRemaining = seconds % 60;
+  const formattedMinutes = String(minutes).padStart(2, '0');
+  const formattedSeconds = String(secondsRemaining).padStart(2, '0');
+  return `${formattedMinutes}:${formattedSeconds}`;
+}
+
+gameSettings.appendChild(time);
 
 
-init(10,10,1,50);
+let htmlElement = document.querySelector('html');
+const choice = document.querySelector('.choice');
+
+
+let cellsCount = 10 * 10;
+    gameField.innerHTML = `<button class="cell" style="height: 50px; width: 50px"></button>`.repeat(cellsCount);
+    let cells = [...gameField.children];
 
 function init(WIDTH, HEIGHT, BOMBS_COUNT, SIZE_CELL) {
-    const cellsCount = WIDTH * HEIGHT;
+    cellsCount = WIDTH * HEIGHT;
     gameField.innerHTML = `<button class="cell" style="height: ${SIZE_CELL}px; width: ${SIZE_CELL}px"></button>`.repeat(cellsCount);
-    const cells = [...gameField.children];
-    let closedCount = cellsCount;
+    cells = [...gameField.children];
+
 
     flagText.textContent = `: ${BOMBS_COUNT}`;
     flag.appendChild(flagText);
@@ -96,7 +152,40 @@ function init(WIDTH, HEIGHT, BOMBS_COUNT, SIZE_CELL) {
     .sort(() => Math.random() - 0.5)
     .slice(0, BOMBS_COUNT);
 
-    gameField.addEventListener('click', (event) => {
+    let mute = true;
+
+    theme.onclick = function() {
+        if (theme.classList.contains('moon')) {
+            themeIMG.src = './assets/images/sun.png';
+            theme.classList.remove('moon');
+            htmlElement.style.background = 'rgb(34, 34, 34)';
+            heading.style.color = "azure";
+            gameSettings.style.background = "rgb(88, 87, 87)";
+            gameField.style.background = "rgb(88, 87, 87)";
+            select.style.background = "rgb(88, 87, 87)";
+        } else {
+            themeIMG.src = './assets/images/moon.png';
+            theme.classList.add('moon');
+            htmlElement.style.background = 'rgb(167, 167, 167)';
+            heading.style.color = "black";
+            gameSettings.style.background = "rgb(48, 48, 48)";
+            gameField.style.background = "rgb(48, 48, 48)";
+            select.style.background = "rgb(48, 48, 48)";
+        }
+        return;
+    };
+
+    sound.onclick = function() {
+        sound.classList.toggle('enable');
+        if (sound.classList.contains('enable')) {
+            mute = false;
+        } else {
+            mute = true;
+            sound.currentTime = 0;
+        }
+    };
+
+    let clickHandler = (event) => {
         if (event.target.tagName !== 'BUTTON') {
             return;
         }
@@ -107,7 +196,7 @@ function init(WIDTH, HEIGHT, BOMBS_COUNT, SIZE_CELL) {
 
         const cell = cells[index];
         const isCellOpen = cell.disabled;
-        const hasFlag = cell.classList.contains('flag1');
+        const hasFlag = cell.classList.contains('flag-red');
 
         if (isCellOpen) {
             return;
@@ -118,9 +207,9 @@ function init(WIDTH, HEIGHT, BOMBS_COUNT, SIZE_CELL) {
         } else {
             open(row, column);
         }
-    });
+    };
 
-    gameField.addEventListener('contextmenu', (event) => {
+    let rightClickHandler = (event) => {
         event.preventDefault();
         if (event.target.tagName !== 'BUTTON') {
             return;
@@ -129,7 +218,6 @@ function init(WIDTH, HEIGHT, BOMBS_COUNT, SIZE_CELL) {
         const index = cells.indexOf(event.target);
         const column = index % WIDTH;
         const row = Math.floor(index / WIDTH);
-
         const cell = cells[index];
         const isCellOpen = cell.disabled;
 
@@ -138,7 +226,7 @@ function init(WIDTH, HEIGHT, BOMBS_COUNT, SIZE_CELL) {
         }
 
         toggleFlag(row, column);
-    });
+    };
 
     function isValid(row, column) {
         return row >= 0 && row < HEIGHT && column >= 0 && column < WIDTH;
@@ -189,8 +277,11 @@ function init(WIDTH, HEIGHT, BOMBS_COUNT, SIZE_CELL) {
         }
     }
 
+    let closedCount = cellsCount;
+
     function open(row, column) {
         if (!isValid(row, column)) return;
+
 
         const index = row * WIDTH + column;
         const cell = cells[index];
@@ -202,22 +293,28 @@ function init(WIDTH, HEIGHT, BOMBS_COUNT, SIZE_CELL) {
         if (isBomb(row, column)) {
             playSound(1);
             removeFlagClasses();
-            alert('Game over');
+            stopTimer();
+            alert(`Game over, your time: ${finalTime}`);
             openAllCells();
+            gameField.classList.add('field-disabled');
+
             setTimeout(function() {
                 playSound(2);
               }, 2000);
             return;
         } else {
+            startTimer();
             const count = getCount(row, column);
             if (count !== 0) {
                 showCellContent(cell, row, column);
+                playSound(4);
                 closedCount--;
                 if (closedCount <= BOMBS_COUNT) {
-                    alert('Win');
                     playSound(3);
+                    stopTimer();
+                    alert(`Win, your time: ${finalTime}`);
+                    gameField.classList.add('field-disabled');
                     // openAllCells();
-                    return;
                 }
                 return;
             }
@@ -226,7 +323,9 @@ function init(WIDTH, HEIGHT, BOMBS_COUNT, SIZE_CELL) {
         closedCount--;
 
         if (closedCount < BOMBS_COUNT) {
-            alert('Win');
+            stopTimer();
+            alert(`Win, your time: ${finalTime}`);
+            gameField.classList.add('field-disabled');
             // openAllCells()
             return;
         }
@@ -264,18 +363,21 @@ function init(WIDTH, HEIGHT, BOMBS_COUNT, SIZE_CELL) {
         if (cell.disabled) {
             cell.disabled = false;
             cell.classList.remove('flag-red');
+
         } else {
             if (!cell.innerHTML && event.button === 2) {
             cell.classList.toggle('flag-red');
             }
         }
 
+        playSound(5);
+
         const flaggedCells = document.querySelectorAll('.flag-red');
 
         if (flaggedCells.length > BOMBS_COUNT) {
             cell.classList.remove('flag-red');
-        return;
-    }
+                return;
+            }
         updateFlagCount();
     }
 
@@ -292,105 +394,78 @@ function init(WIDTH, HEIGHT, BOMBS_COUNT, SIZE_CELL) {
     }
 
     cells.forEach(cell => {
-        cell.addEventListener('mousedown', (event) => {
-            if (event.button === 2) {
-                event.preventDefault();
-            }
+        cell.addEventListener('contextmenu', (event) => {
+            event.preventDefault();
         });
     });
+
+    gameField.addEventListener('click', clickHandler);
+    gameField.addEventListener('contextmenu', rightClickHandler);
 
     function playSound(event) {
         // sound.currentTime = 0; // Сбросить текущую позицию аудио
         const audio = document.createElement('audio');
         const source = document.createElement('source');
 
-        if(event == 1) {
-            source.src = './assets/sounds/boom.mp3';
-        }
-        if(event == 2) {
-            source.src = './assets/sounds/fail2.mp3';
-        }
-        if(event == 3) {
-            source.src = './assets/sounds/win2.mp3';
+        if (mute == true) {
+            if(event == 1) {
+                source.src = './assets/sounds/boom.mp3';
+            }
+            if(event == 2) {
+                source.src = './assets/sounds/fail2.mp3';
+            }
+            if(event == 3) {
+                source.src = './assets/sounds/win2.mp3';
+            }
+            if(event == 4) {
+                source.src = './assets/sounds/step.mp3';
+            }
+            if(event == 5) {
+                source.src = './assets/sounds/flag2.mp3';
+            }
         }
 
         source.type = 'audio/mpeg';
 
         audio.appendChild(source);
         audio.play();
-      }
+    }
 
+    reload.addEventListener('click', function(event) {
+        location.reload();
+    });
 }
-
-
-const choice = document.querySelector('.choice');
 
 choice.addEventListener('change', function(event) {
-  const selectedOption = event.target.value;
+    const selectedOption = event.target.value;
 
-  while (gameField.firstChild) {
-    gameField.removeChild(gameField.firstChild);
-  }
+    while (gameField.firstChild) {
+      gameField.removeChild(gameField.firstChild);
+    }
 
-  if (selectedOption === '10x10') {
-    init(10,10,10,50);
-  }
+    if (selectedOption === '10x10') {
+        init(10,10,10,50); // ВСЕ ЛОМАЕТСЯ ПОСЛЕ init()
+    }
 
-  if (selectedOption === '15x15') {
-    init(15,15,20,33.333);
-  }
+    if (selectedOption === '15x15') {
+        init(15,15,20,33.333); // ВСЕ ЛОМАЕТСЯ ПОСЛЕ init()
+    }
 
-  if (selectedOption === '25x25') {
-    init(25,25,50,20);
-  }
+    if (selectedOption === '25x25') {
+        init(25,25,50,20); // ВСЕ ЛОМАЕТСЯ ПОСЛЕ init()
+    }
 });
 
-
-
-let timerId;
-let seconds = 0;
-let isTimerRunning = false;
-
-function startTimer() {
-  if (!isTimerRunning) {
-    timerId = setInterval(updateTime, 1000);
-    isTimerRunning = true;
-  }
-}
-
-function resetTimer() {
-  clearInterval(timerId);
-  seconds = 0;
-  updateTime();
-  isTimerRunning = false;
-}
-
-function updateTime() {
-  const formattedTime = formatTime(seconds);
-  timeText.textContent = formattedTime;
-  seconds++;
-}
-
-function formatTime(seconds) {
-  const minutes = Math.floor(seconds / 60);
-  const secondsRemaining = seconds % 60;
-  const formattedMinutes = String(minutes).padStart(2, '0');
-  const formattedSeconds = String(secondsRemaining).padStart(2, '0');
-  return `${formattedMinutes}:${formattedSeconds}`;
-}
-
-gameSettings.appendChild(time);
 
 choice.addEventListener('change', function(event) {
   resetTimer();
-});
-
-gameField.addEventListener('click', function(event) {
-  startTimer();
 });
 
 gameSettings.appendChild(select);
 gameSettings.appendChild(flag);
 gameSettings.appendChild(time);
 gameSettings.appendChild(sound);
+gameSettings.appendChild(reload);
 gameSettings.appendChild(theme);
+
+init(10,10,10,50);

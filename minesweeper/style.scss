@@ -65,6 +65,47 @@ h2 {
     align-items: center;
 }
 
+.sound {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.enable {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.enable:before {
+    content: '';
+    position: absolute;
+    top: 70%;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: red;
+    transform: rotate(-45deg);
+    transform-origin: top left;
+}
+
+.reload {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.theme {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
 img {
     width: 35px;
     height: 35px;
@@ -75,3 +116,7 @@ img {
     background-size: contain;
     background-repeat: no-repeat;
 }
+
+.field-disabled {
+    pointer-events: none;
+  }
