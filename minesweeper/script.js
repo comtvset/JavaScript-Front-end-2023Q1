@@ -10,6 +10,14 @@ container.className = "container";
 const heading = document.createElement("h1");
 heading.textContent = "minesweeper";
 
+const sheet = document.createElement("h2");
+sheet.textContent = "results:";
+sheet.className = "sheet";
+
+const lastResult = document.createElement("h2");
+// lastResult.textContent = "{ step: clickCount, time: finalTime }";
+sheet.appendChild(lastResult);
+
 const game = document.createElement("div");
 game.className = "game";
 
@@ -98,6 +106,7 @@ game.appendChild(gameField);
 
 container.appendChild(heading);
 container.appendChild(game);
+container.appendChild(sheet);
 
 document.body.appendChild(container);
 
@@ -141,6 +150,20 @@ function formatTime(seconds) {
 }
 
 gameSettings.appendChild(time);
+
+
+
+let results = [];
+let maxResults = 10;
+
+function saveResult(step, time) {
+  results.unshift({ step: clickCount, time: finalTime });
+  if (results.length > maxResults) {
+    results.pop();
+  }
+}
+
+
 
 let WIDTH = 0;
 let HEIGHT = 0;
@@ -316,7 +339,6 @@ function init(_WIDTH, _HEIGHT, _BOMBS_COUNT, _SIZE_CELL) {
     function open(row, column) {
         if (!isValid(row, column)) return;
 
-
         const index = row * WIDTH + column;
         const cell = cells[index];
 
@@ -329,8 +351,10 @@ function init(_WIDTH, _HEIGHT, _BOMBS_COUNT, _SIZE_CELL) {
             removeFlagClasses();
             stopTimer();
             alert(`Game over, your time: ${finalTime}; and your steps: ${clickCount}`);
+            saveResult(clickCount, finalTime);
+            lastResult.innerHTML = `<pre>${results.map((result, index) => `${index + 1}. ${JSON.stringify(result).replace(/[\[\]{}]/g, '').replace(/":/g, ' " : ')}\n`).join('')}</pre>`;
             openAllCells();
-            // gameField.classList.add('field-disabled');
+            gameField.classList.add('field-disabled');
 
             setTimeout(function() {
                 playSound(2);
@@ -347,7 +371,9 @@ function init(_WIDTH, _HEIGHT, _BOMBS_COUNT, _SIZE_CELL) {
                     playSound(3);
                     stopTimer();
                     alert(`Win, your time: ${finalTime}; and your steps: ${clickCount}`);
-                    // gameField.classList.add('field-disabled');
+                    saveResult(clickCount, finalTime);
+                    lastResult.innerHTML = `<pre>${results.map((result, index) => `${index + 1}. ${JSON.stringify(result).replace(/[\[\]{}]/g, '').replace(/":/g, '":')}\n`).join('')}</pre>`;
+                    gameField.classList.add('field-disabled');
                     // openAllCells();
                 }
                 return;
@@ -359,7 +385,9 @@ function init(_WIDTH, _HEIGHT, _BOMBS_COUNT, _SIZE_CELL) {
         if (closedCount < BOMBS_COUNT) {
             stopTimer();
             alert(`Win, your time: ${finalTime}; and your steps: ${clickCount}`);
-            // gameField.classList.add('field-disabled');
+            saveResult(clickCount, finalTime);
+            lastResult.innerHTML = `<pre>${results.map((result, index) => `${index + 1}. ${JSON.stringify(result).replace(/[\[\]{}]/g, '').replace(/":/g, ' " : ')}\n`).join('')}</pre>`;
+            gameField.classList.add('field-disabled');
             // openAllCells()
             return;
         }
@@ -387,7 +415,6 @@ function init(_WIDTH, _HEIGHT, _BOMBS_COUNT, _SIZE_CELL) {
         if(!isValid(row, column)) return false;
 
         const index = row * WIDTH + column;
-        console.log(bombs.includes(index))
         return bombs.includes(index);
     }
 
@@ -467,6 +494,7 @@ function init(_WIDTH, _HEIGHT, _BOMBS_COUNT, _SIZE_CELL) {
         init(WIDTH, HEIGHT, BOMBS_COUNT, SIZE_CELL);
         resetTimer();
         stepText.textContent = "0";
+        gameField.classList.remove('field-disabled');
     });
 
 
@@ -480,16 +508,19 @@ choice.addEventListener('change', function(event) {
     if (selectedOption === '10x10') {
         init(10,10,10,50);
         stepText.textContent = "0";
+        gameField.classList.remove('field-disabled');
     }
 
     if (selectedOption === '15x15') {
         init(15,15,20,33.333);
         stepText.textContent = "0";
+        gameField.classList.remove('field-disabled');
     }
 
     if (selectedOption === '25x25') {
         init(25,25,50,20);
         stepText.textContent = "0";
+        gameField.classList.remove('field-disabled');
     }
 });
 

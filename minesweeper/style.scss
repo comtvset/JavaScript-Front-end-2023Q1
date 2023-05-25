@@ -83,6 +83,14 @@ h2 {
     align-items: center;
 }
 
+.sheet {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 530px;
+}
+
 .sound {
     display: flex;
     flex-direction: row;
